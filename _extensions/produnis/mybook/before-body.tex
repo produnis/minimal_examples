@@ -1,0 +1,33 @@
+\begin{titlepage}
+
+  \begin{center}
+  $title$\\
+  \includegraphics[width=100mm]{cover.png}
+
+  \vspace{10mm}
+  \begin{minipage}[]{0.85\textwidth}
+    \begin{center}
+      {\color{HSNRblue1}
+      \Huge $subtitle$
+      }
+    \end{center}
+  \end{minipage}
+
+  \vspace{6mm}
+
+  \normalsize $author$
+
+  \vfill
+  \footnotesize Version vom $date$
+  \end{center}
+
+\thispagestyle{empty}
+\end{titlepage}
+\pagenumbering{roman}
+%-------------------------
+\pagestyle{fancy}
+\fancyhead[L]{\leftmark}  % Kapitelname links
+\fancyhead[R]{$title$}  % Titel rechts
+\fancyfoot[C]{Seite \thepage\ von \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
