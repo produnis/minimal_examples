@@ -1,10 +1,15 @@
 ---
 title: "Test Long list"
 author: "me"
-format: pdf
+format: 
+  pdf:
+    keep-tex: true
+    filters: 
+      - longlistpagebreak.lua
 ---
 
-:::: {.callout-note appearance="simple"}
+::::{.calloutlonglist}
+::: {.callout-note appearance="simple"}
 
 Der Datensatz `Neugeborene.sav` (verfügbar unter <https://www.produnis.de/tabletrainer/data/Neugeborene.sav>) beinhaltet Daten von 120 Neugeborenen und ihrer Eltern.
 
@@ -19,19 +24,23 @@ d) Bilden Sie aus der Variable Geburtsgewicht (`GEBGEWI`) eine neue Variable (`G
     + $>$ 3000 bis 3500g 
     + $>$ 3500 bis 4000g 
     + $>$ 4000g          
+
 e) Berechnen Sie zur Variable Geburtsgewicht folgende Stichprobenmerkmale:
     + Minimum, 5. Perzentil, 1. Quartil, Median, Mittelwert,
     + 3. Quartil, 95. Perzentil, Maximum, Interquartilabstand
     
    getrennt für Jungen und Mädchen.
+
 f) Erstellen Sie Boxplots des Geburtsgewichts für alle Kinder, sowie separat für Jungen und Mädchen.
 g) Erstellen Sie zur Variable `GEWIKAT` je eine Häufigkeitstabelle und ein Säulendiagramm für a) die gesamte Stichprobe und b) unter Berücksichtigung des 2. Merkmals `SEX`
+
 h) Analysieren Sie den (linearen) Zusammenhang zwischen dem Geburtsgewicht [`GEBGEWI`] und der Körpergröße bei Geburt [`GEBGROE`].
 i) Einfluss des BMI
     + Bilden Sie aus den Variablen Größe des Vaters [`VATGROE`] und Gewicht des Vaters [`VATGEW`] den Body Mass Index [`VATBMI`] (kg/m^2^). 
     + Bilden Sie den BMI der Mutter [`MUTBMI`] aus den Variablen Gewicht der Mutter [`MUTGEW`] und Größe der Mutter [`MUTGROE`].
     + Gibt es einen (linearen) Zusammenhang zwischen dem BMI der Mutter und dem des Vaters? 
     + Hat der BMI der Mutter einen Einfluss auf das Geburtsgewicht des Neugeborenen?
+
 j) Bilden Sie aus der Variable Gewicht im Alter von 6 Wochen [`FUGEW`] und Größe im Alter von 6 Wochen [`FUGROE`] die Variable *Ponderal Index im Alter von 6 Wochen*. \newline Für Säuglinge lautet die Formel $PI = 100 \cdot \frac{g}{cm^3}$.
 k) Bilden Sie eine neue Variable: Gewichtszunahme des Kindes von Geburt bis zum Alter von 6 Wochen.
 l) Bilden Sie eine neue Variable: Gewichtszunahme von Geburt bis zum Alter von 6 Wochen in % vom Geburtsgewicht.
@@ -41,6 +50,7 @@ n) Vergleichen Sie die gestillten und die nicht gestillten Kinder
     + ihrer Gewichtszunahme (Geburt – 6 Wochen),
     + ihrer prozentualen Gewichtszunahme (Geburt – 6 Wochen),
     + ihres Ponderal Index im Alter von 6 Wochen.
+
 o) Bilden Sie eine neue Variable Schwangerschaftsdauer [`SCHDAUG`] in Gesamttagen, die Sie aus den Variablen Schwangerschaftsdauer in (ganzen) Wochen (`SCHDAUW`, fehlende Werte =99) und Schwangerschaftsrestdauer in Tagen (`SCHDAUT`; fehlende Werte=9; "." = 0) bilden.\newline Hat die Schwangerschaftsdauer einen Einfluss auf das Geburtsgewicht?
 p) Bilden Sie aus der Variable Nationalität der Mutter [`NATMUT`] eine neue Variable, welche die Nationalität der Mutter in 3 Kategorien zusammenfasst: `deutsch` (NATMUT=D), `türkisch` (NATMUT=TR) und `sonstige` (alle anderen, auch die ohne Angabe).
 q) Unterscheiden sich die Kinder von Müttern der verschiedenen Nationalitäten hinsichtlich ihres Geburtsgewichts und ihres Ponderal Index im Alter von 6 Wochen?
@@ -48,4 +58,8 @@ r) Werden die Kinder von Müttern unterschiedlicher Nationalitäten gleich häuf
 s) Vergleichen Sie das mittlere Geburtsgewicht mit der Referenz 3500g (t-Test für eine Stichprobe).
 t) Vergleichen Sie das mittlere Geburtsgewicht von männlichen und weiblichen Neugeborenen  (t-Test für zwei Stichprobe).
 
+:::
 ::::
+
+
+guten tach
