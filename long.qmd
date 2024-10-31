@@ -1,11 +1,11 @@
 ---
 title: "Test Long list"
 author: "me"
+filters: 
+  - longlistpagebreak.lua
 format: 
   pdf:
     keep-tex: true
-    filters: 
-      - longlistpagebreak.lua
   html: 
     theme: test.css
 ---
