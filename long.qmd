@@ -16,7 +16,6 @@ test
 
 
 ::::{.longlistcallout}
-
 Der Datensatz `Neugeborene.sav` (verfügbar unter <https://www.produnis.de/tabletrainer/data/Neugeborene.sav>) beinhaltet Daten von 120 Neugeborenen und ihrer Eltern.
 
 FOO
