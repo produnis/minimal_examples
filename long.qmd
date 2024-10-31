@@ -6,14 +6,22 @@ format:
     keep-tex: true
     filters: 
       - longlistpagebreak.lua
-      - add-markers.lua
+  html: 
+    theme: test.css
 ---
 
-::::{.calloutlonglist}
-::: {.callout-note appearance="simple"}
+::: {.callout-note appearance="default"}
+test
+:::
+
+
+::::{.longlistcallout}
 
 Der Datensatz `Neugeborene.sav` (verfügbar unter <https://www.produnis.de/tabletrainer/data/Neugeborene.sav>) beinhaltet Daten von 120 Neugeborenen und ihrer Eltern.
 
+FOO
+und
+BAAR
 
 a) Laden Sie den SPSS-Datensatz `Neugeborene.sav` in Ihre `R`-Session und überführen Sie ihn in eine `data.table` mit dem Namen `ng2`. 
 b) In einigen Variablen finden Sie die Merkmalsausprägungen 9, 99 oder 999. Diese
@@ -59,7 +67,6 @@ r) Werden die Kinder von Müttern unterschiedlicher Nationalitäten gleich häuf
 s) Vergleichen Sie das mittlere Geburtsgewicht mit der Referenz 3500g (t-Test für eine Stichprobe).
 t) Vergleichen Sie das mittlere Geburtsgewicht von männlichen und weiblichen Neugeborenen  (t-Test für zwei Stichprobe).
 
-:::
 ::::
 
 
