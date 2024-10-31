@@ -1,23 +1,32 @@
-local in_calloutlonglist = false
+-- Lua writer to remove specific minipage environments in marked sections for Quarto/Pandoc
 
-function Div(el)
-  if el.classes:includes("calloutlonglist") then
-    in_calloutlonglist = true
-    local processed_content = {}
-    for _, elem in ipairs(el.content) do
-      table.insert(processed_content, elem:walk({
-        RawBlock = function(raw_el)
-          if raw_el.format == 'latex' then
-            local start_pattern = "\\begin%{minipage%}%[t%]%{\\textwidth - 5.5mm%}"
-            local end_pattern = "\\end%{minipage%}"
-            raw_el.text = raw_el.text:gsub(start_pattern, "")
-            raw_el.text = raw_el.text:gsub(end_pattern, "")
-          end
-          return raw_el
+local start_marker = "%% THIS IS THE START OF MY INDICATOR"
+local end_marker = "%% HERE IT ENDS"
+
+function Writer(doc, output)
+    local output = pandoc.write(doc, "latex")
+
+    local in_filtered_section = false
+    local begin_minipage_pattern = "\\begin%{minipage%}%[t%]%{[^}]+%}"
+    local end_minipage_pattern = "\\end%{minipage%}"
+
+    local processed_output = {}
+
+    for line in output:gmatch("[^\r\n]+") do
+        if line:match(start_marker) then
+            in_filtered_section = true
+        elseif line:match(end_marker) then
+            in_filtered_section = false
         end
-      }))
+
+        if in_filtered_section then
+            if not line:match(begin_minipage_pattern) and not line:match(end_minipage_pattern) then
+                table.insert(processed_output, line)
+            end
+        else
+            table.insert(processed_output, line)
+        end
     end
-    in_calloutlonglist = false
-    return pandoc.Div(processed_content, el.attr)
-  end
+
+    return table.concat(processed_output, "\n")
 end
