@@ -1,0 +1,31 @@
+---
+title: "Test subcaption"
+author: "me"
+format: 
+  pdf:
+    keep-tex: true
+  html: default
+---
+
+::: {.callout-note appearance="default"}
+test
+:::
+
+::: {.callout-important appearance="simple"}
+here come some plots
+:::
+
+```{r}
+#| layout-ncol: 3
+#| fig-subcap: 
+#|   - This
+#|   - is a
+#|   - test
+x <- c(1:100)
+y <- x+x+2
+plot(x, y)
+hist(y, breaks=5)
+barplot(table(x,y))
+```
+
+In PDF, all subcaps start with `a)`.
