@@ -2,8 +2,9 @@
 
 ## What is the problem? {#sec-problem}
 ::: {.callout-note appearance="default"}
-The Problem is:
+## The Problem is:
 
+- in quarto BOOK
 - if you crossref in an `{.unnumbered}` section, and use `[-@sec-something]`, then in HTML you wont get an abbreviation
 :::
 
@@ -13,5 +14,5 @@ Here, within a numbered section, everything works
 
 See @sec-problem and  [-@sec-test] and even [foo -@sec-setup].
 
-
+Click to the next page to see the problem...
 
