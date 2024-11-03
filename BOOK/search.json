@@ -1,0 +1,42 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "1 Setup",
+    "section": "",
+    "text": "1 Setup",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setup</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#sec-problem",
+    "href": "index.html#sec-problem",
+    "title": "1 Setup",
+    "section": "1.1 What is the problem?",
+    "text": "1.1 What is the problem?\n\n\n\n\n\n\nNote\n\n\n\nThe Problem is:\n\nif you crossref in an {.unnumbered} section, and use [-@sec-something], then in HTML you wont get an abbreviation",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setup</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#sec-test",
+    "href": "index.html#sec-test",
+    "title": "1 Setup",
+    "section": "1.2 just a test",
+    "text": "1.2 just a test\nHere, within a numbered section, everything works\nSee Section 1.1 and 1.2 and even foo 1.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setup</span>"
+    ]
+  },
+  {
+    "objectID": "crossref.html",
+    "href": "crossref.html",
+    "title": "Unnnumbered",
+    "section": "",
+    "text": "Important\n\n\n\nThis is a unnumbered Section. While everything goes well in PDF / LaTex, have a look at the HTML output.\nSee 1.1 What is the problem? and 1.2 just a test and even foo 1 Setup.",
+    "crumbs": [
+      "Unnnumbered"
+    ]
+  }
+]

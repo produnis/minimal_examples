@@ -1,0 +1,10 @@
+# Unnnumbered {-}
+
+::: {.callout-important appearance="default"}
+This is a unnumbered Section. While everything goes well in PDF / LaTex, have a look at the HTML output.
+
+See @sec-problem and  [-@sec-test] and even [foo -@sec-setup].
+
+:::
+
+

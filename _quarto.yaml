@@ -1,0 +1,12 @@
+project:
+  type: book
+  output-dir: BOOK
+
+book:
+  chapters:
+    - index.qmd
+    - crossref.qmd
+
+format:
+  html: default
+  pdf: default
