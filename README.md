@@ -8,3 +8,5 @@ Each example lives in its own branch
 
 In quarto BOOK, if you crossref from an unnumbered section, you won't get abbreviations in HTML output (PDF works fine)
 
+## Issue
+<https://github.com/quarto-dev/quarto-cli/issues/11292>
