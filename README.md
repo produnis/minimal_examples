@@ -8,3 +8,5 @@ Each example lives in its own branch
 I translated my _extension from LaTeX/PDF to typst/PDF.
 I have some questions...
 :)
+
+<https://github.com/quarto-dev/quarto-cli/discussions/11364>
