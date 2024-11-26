@@ -1,0 +1,84 @@
+\begin{strip}             % einspaltig in zweispaltiger Umgebung
+\begin{titlepage}
+\thispagestyle{titlepage} % wurde im Header definiert
+\vspace*{-30mm}
+
+% === Logo und Titel =====================================
+\begin{center}
+\includegraphics[width=0.6\textwidth]{$logo$}
+
+\Large %
+$title$. $if(subtitle)$\\
+\large $subtitle$.$endif$
+\end{center}
+%----------------------------------------------------------
+
+% ==== Autoren =====
+$for(by-author)$$by-author.name.literal$%
+$if(by-author.attributes.corresponding)$%
+\newcommand{\corresponding}{$by-author.name.literal$, $by-author.email$}%
+$endif$%
+\textsuperscript{$for(by-author.affiliations)$$it.number$$sep$,$endfor$}%
+$sep$, %
+$endfor$
+%----------------------
+
+\vspace{1mm}
+
+% == Affiliations =================00
+\scriptsize{
+$for(by-affiliation)$
+$it.number$ $it.name$$if(it.department)$, $it.department$$endif$
+$sep$| %
+$endfor$
+}
+%---------------------------------
+
+\vspace{1mm}
+
+% === korresponierender Autor ============
+Kontakt: \corresponding
+%------------------------------------------
+
+\vspace{2mm}
+
+% === Name des Moduls und Datum ============
+\normalsize 
+$journal.name$ \hfill $date$
+%------------------------------------------
+
+
+
+
+% === Abstract ===============================
+\vspace{3mm}
+$if(abstract)$
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+        \textbf{Abstract:} \small\ $abstract$
+    }%
+}
+\vspace{1mm}
+$endif$
+% --------------------------------------------
+\end{titlepage}
+\normalsize
+\end{strip}
+
+
+
+
+
+
+
+% ==== Kopf- und Fußzeile ==========================
+\clearpairofpagestyles
+\ihead{$title$}   % oben-links
+%\chead{$title$}   % oben-mitte
+\ohead{$journal.name$}   % oben-rechts
+
+%\ifoot{$journal.name$}  % unten-links
+\cfoot{\pagemark}       % unten-mitte
+%\ofoot{DOI: $DOI$}     % unten-rechts
+% --------------------------------------------------
+% End of File
