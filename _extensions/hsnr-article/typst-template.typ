@@ -47,8 +47,8 @@
 #set par(justify: true)
 //------------------------------------------
 
-// Zitationsstil
-#set bibliography(style: csl)
+// TURNED OF TO DEMONSTRATE THAT QUARTO INSERTS ITS OWN set bibliography
+//#set bibliography(style: csl)
 
 
 // Korrespondenzautor heraussuchen und in Variable speichern
