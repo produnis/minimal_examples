@@ -1,2 +1,0 @@
-#show: hsnr-article.with(
-)

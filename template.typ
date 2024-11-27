@@ -171,287 +171,148 @@
     )
 }
 
-// Pfade escapen
-//------------------------------------------
-#let logo_path = "\_extensions/hsnr-article/HSNRfb10.png"
-#let logo_path = logo_path.replace("\\", "")
-
-#let signature = ""
-#let signature = signature.replace("\\", "")
-
-#let csl = "\_extensions/hsnr-article/apa-single-spaced.csl"
-#let csl = csl.replace("\\", "")
-//------------------------------------------
 
 
-// Farben definieren
-#let HSNRblue1 = rgb("185191")
-#let HSNRblue2 = rgb("07A1E2")
-//------------------------------------------
-
-
-
-// blaue Überschriften
-#show heading.where(level: 1): it => block(
-    // hellblau bei stufe 2
-    text(HSNRblue1)[#it.body
-                    #v(5mm)]
-  )
-
-#show heading.where(level: 2): it => block(
-    // hellblau bei stufe 2
-    text(HSNRblue2)[#it.body
-                    #v(2mm)]
-  )
-
-#show heading.where(level: 3): it => block(
-    // hellblau bei stufe 2
-    text(HSNRblue2)[#it.body
-                    #v(2mm)]
-  )
-//------------------------------------------
-
-
-// Schriftart und Sprache
-#set text(font: "Times New Roman",
-          size: 11pt,
-          lang: "de",)
-
-#set par(justify: true)
-//------------------------------------------
-
-// TURNED OF TO DEMONSTRATE THAT QUARTO INSERTS ITS OWN set bibliography
-//#set bibliography(style: csl)
-
-
-// Korrespondenzautor heraussuchen und in Variable speichern
-//----------------------------------------------------------
-#let korrespondent ="Jörg große Schlarmann, joerg.grosseschlarmann\@hs-niederrhein.de"
-#let korrespondent = korrespondent.replace("\\", "")
-//----------------------------------------------------------
-
-
-
-
-//------------------------------------------------------------
-//     Los gehts
-//------------------------------------------------------------
-#let hsnr-article(
-
-  body
+#let article(
+  title: none,
+  subtitle: none,
+  authors: none,
+  date: none,
+  abstract: none,
+  abstract-title: none,
+  cols: 1,
+  margin: (x: 1.25in, y: 1.25in),
+  paper: "us-letter",
+  lang: "en",
+  region: "US",
+  font: "linux libertine",
+  fontsize: 11pt,
+  title-size: 1.5em,
+  subtitle-size: 1.25em,
+  heading-family: "linux libertine",
+  heading-weight: "bold",
+  heading-style: "normal",
+  heading-color: black,
+  heading-line-height: 0.65em,
+  sectionnumbering: none,
+  toc: false,
+  toc_title: none,
+  toc_depth: none,
+  toc_indent: 1.5em,
+  doc,
 ) = {
-    // Seitengröße und -ränder festlegen
-  set page(paper: "a4",
-           margin: (top: 35mm,
-                    bottom: 30mm,
-                    left: 20mm,
-                    right: 20mm),
-                      numbering: "1.",
-                                 number-align: center,
-                       columns: 1,
-           header: locate(
-                   loc => if [#loc.page()] == [1] {
-                   text(1pt)[]
-                   } else{
-
-                    grid(
-                        columns: (1fr, 1fr),
-                        align: (left, right),
-                          text(10pt, style: "italic")[Bewertung von RCT-Studienpublikationen],
-                          text(10pt)[Modul 10 EBN1],
-                          v(4pt),v(4pt),
-                          line(length: 100%, stroke: 0.5pt),
-                          line(length: 100%, stroke: 0.5pt),
-                        )
-                    }
-                  ),
-
-           footer: align(center)[#text(8pt)[Seite #context counter(page).display("1 von 1",both: true,)]]
+  set page(
+    paper: paper,
+    margin: margin,
+    numbering: "1",
   )
+  set par(justify: true)
+  set text(lang: lang,
+           region: region,
+           font: font,
+           size: fontsize)
+  set heading(numbering: sectionnumbering)
+  if title != none {
+    align(center)[#block(inset: 2em)[
+      #set par(leading: heading-line-height)
+      #if (heading-family != none or heading-weight != "bold" or heading-style != "normal"
+           or heading-color != black or heading-decoration == "underline"
+           or heading-background-color != none) {
+        set text(font: heading-family, weight: heading-weight, style: heading-style, fill: heading-color)
+        text(size: title-size)[#title]
+        if subtitle != none {
+          parbreak()
+          text(size: subtitle-size)[#subtitle]
+        }
+      } else {
+        text(weight: "bold", size: title-size)[#title]
+        if subtitle != none {
+          parbreak()
+          text(weight: "bold", size: subtitle-size)[#subtitle]
+        }
+      }
+    ]]
+  }
 
-align(center)[
+  if authors != none {
+    let count = authors.len()
+    let ncols = calc.min(count, 3)
+    grid(
+      columns: (1fr,) * ncols,
+      row-gutter: 1.5em,
+      ..authors.map(author =>
+          align(center)[
+            #author.name \
+            #author.affiliation \
+            #author.email
+          ]
+      )
+    )
+  }
 
-// Logo, Titel, Subtitel
-//-----------------------
-      #v(-30mm)
-      #image(logo_path, width: 100mm)
-      #text(16pt)[Bewertung von RCT-Studienpublikationen]
-      #v(-4mm)
-      #text(14pt)[Hinweise zur Krefelder Ampel]
-//--------------------------------------------
+  if date != none {
+    align(center)[#block(inset: 1em)[
+      #date
+    ]]
+  }
 
-      #v(1mm)
+  if abstract != none {
+    block(inset: 2em)[
+    #text(weight: "semibold")[#abstract-title] #h(1em) #abstract
+    ]
+  }
 
-// Autoren und Affiliation
-      #text()[
-              Jörg große Schlarmann
-              #h(-3pt)#super[1]#h(-2pt)
-              ,
-              Matthias Mertin
-              #h(-3pt)#super[1]#h(-2pt)
-              ,
-              Clarissa Besoffen
-              #h(-3pt)#super[2]#h(-2pt)
-              
-      ]
+  if toc {
+    let title = if toc_title == none {
+      auto
+    } else {
+      toc_title
+    }
+    block(above: 0em, below: 2em)[
+    #outline(
+      title: toc_title,
+      depth: toc_depth,
+      indent: toc_indent
+    );
+    ]
+  }
 
-      #v(-2mm)
-
-      #text(8pt)[
-                            #super[1]#h(-1pt) Hochschule Niederrhein, Fachbereich Gesundheitswesen
-              |               #super[2]#h(-1pt) Evelyn Burdecki Institut, Fachbereich Alleswissenschaft
-                            #v(-3pt)
-              Kontakt: #korrespondent
-              ]
-//--------------------------------------------
-] // ende align(cemter)
-
-
-  v(2mm)
-
-// Abstract
-  align(center)[#text(weight: "bold")[Abstrakt]
-                #v(-2mm)
-                #text()[In diesem Text werden Hinweise zur Bewertung von Studienpublikationen gegeben. Dabei wird der Schwerpunkt auf randomisiert kontrollierten Studien (RCTs) gelegt. Anhand der Fragen der Krefelder Ampel wird ausgeführt, welche Informationen in der Pubikation enthalten sein sollten, und welche Auswirkungen diese Informationen auf die Studienergebnisse sowie deren Glaubwürdigkeit haben.
-
-]
-               ]
-//--------------------------------------------
-
-v(1mm)
-
-// Journal und Datum
-  grid(columns: (1fr, 1fr),
-       align: (left, right),
-       text(11pt)[Modul 10 EBN1],
-       text(11pt)[13.02.2024],)
-//--------------------------------------------
-
-v(-4mm)
-
-// Hauptteil ----
-  line(length: 100%, stroke: 0.5pt)
-
-  v(4mm)
-
-  // umschalten auf 2spaltig
-  show: columns.with(2)
-
-  // Hauptteil des Dokuments
-  body
-
+  if cols == 1 {
+    doc
+  } else {
+    columns(cols, doc)
+  }
 }
-#import "@preview/fontawesome:0.1.0": *
 
-#show: hsnr-article.with(
+#set table(
+  inset: 6pt,
+  stroke: none
 )
 
-= Einleitung
-<einleitung>
-#block[
-#callout(
-body: 
-[
-Achtung, bei diesem Artikel handelt es sich um #emph[graue Literatur];. Er ist für Ihre Vor- und Nachbereitung gedacht. Dieser Artikel sollte #strong[auf keinen Fall] zitiert werden!
-
-]
-, 
-title: 
-[
-Nicht zitieren!!!
-]
-, 
-background_color: 
-rgb("#f7dddc")
-, 
-icon_color: 
-rgb("#CC1914")
-, 
-icon: 
-fa-exclamation()
+#show: doc => article(
+  title: [My title],
+  authors: (
+    ( name: [me],
+      affiliation: [],
+      email: [] ),
+    ),
+  toc_title: [Table of contents],
+  toc_depth: 3,
+  cols: 1,
+  doc,
 )
-]
-== Hintergrund
-<hintergrund>
-Zitationstest #cite(<grSchlR>, form: "prose") und #cite(<Arnold09>, form: "prose")
 
- #lorem(50)
-= Methode
-<methode>
+= Foo
+<foo>
  #lorem(50)
 = Ergebnisse
 <ergebnisse>
-Siehe #strong[?\@tbl-zweispaltig]
-
  #lorem(50)
-= Diskussion
-<diskussion>
-Und siehe @tbl-einspaltig
-
-#figure([
-#table(
-  columns: 4,
-  align: (auto,left,right,center,),
-  table.header([Default], [Left], [Right], [Center],),
-  table.hline(),
-  [12], [12], [12], [12],
-  [123], [123], [123], [123],
-  [1], [1], [1], [1],
-)
-], caption: figure.caption(
-position: top, 
-[
-Einspaltige Tabelle
-]), 
-kind: "quarto-float-tbl", 
-supplement: "Tabelle", 
-)
-<tbl-einspaltig>
-
-
- #lorem(50)
-== Implikationen
-<implikationen>
-#figure([
-#box(image("_extensions/hsnr-article/HSNRfb10.png"))
-], caption: figure.caption(
-separator: "", 
-position: bottom, 
-[
-]), 
-kind: "quarto-float-fig", 
-supplement: "Abbildung", 
-)
-<fig-zweispaltig>
-
-
-siehe @fig-zweispaltig
-
- #lorem(50)
-== Forschungsbedarf
-<forschungsbedarf>
- #lorem(50)
-= Fazit
-<fazit>
- #lorem(50)
-#block[
-#heading(
-level: 
-1
-, 
-numbering: 
-none
-, 
-[
-Literatur
-]
-)
-]
 
 
  
   
-#set bibliography(style: "\_extensions/hsnr-article/apa-single-spaced.csl") 
+#set bibliography(style: "\_foobar/apa-single-spaced.csl") 
 
 
 #bibliography("literatur.bib")

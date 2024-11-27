@@ -1,130 +1,22 @@
 ---
-title: Bewertung von RCT-Studienpublikationen
-subtitle: Hinweise zur Krefelder Ampel
-date: 2024-02-13
-journal:
-  name: Modul 10 EBN1
-author:
-  - name: Jörg große Schlarmann
-    email: joerg.grosseschlarmann@hs-niederrhein.de
-    affiliations:
-      - id: hsnr
-        name: Hochschule Niederrhein
-        department: Fachbereich Gesundheitswesen
-    attributes:
-        corresponding: true
-  - name: Matthias Mertin
-    affiliations:
-      - ref: hsnr
-  - name: Clarissa Besoffen
-    affiliations:
-      - id: test
-        name: Evelyn Burdecki Institut
-        department: Fachbereich Alleswissenschaft
-abstract: |
-  In diesem Text werden Hinweise zur Bewertung von Studienpublikationen gegeben. Dabei wird   der Schwerpunkt auf randomisiert kontrollierten Studien (RCTs) gelegt. Anhand der Fragen der Krefelder Ampel wird ausgeführt, welche Informationen in der Pubikation enthalten sein sollten, und welche Auswirkungen diese Informationen auf die Studienergebnisse sowie deren Glaubwürdigkeit haben.
+title: My title
+author: me
 bibliography: literatur.bib
-format: hsnr-article-typst
+csl: _foobar/apa-single-spaced.csl
+format: typst
 ---
 
 
-# Einleitung
+# Foo
 
-
-::: {.callout-important}
-## Nicht zitieren!!!
-Achtung, bei diesem Artikel handelt es sich um *graue Literatur*. Er ist für Ihre Vor- und Nachbereitung gedacht. Dieser Artikel sollte **auf keinen Fall** zitiert werden!
-:::
-
-
-## Hintergrund
-
-Zitationstest @grSchlR und @Arnold09
-
-
-\lipsum
-```{=typst}
- #lorem(50)
-```
-
-# Methode
-
-\lipsum
 ```{=typst}
  #lorem(50)
 ```
 
 # Ergebnisse
 
-
-```{=latex}
-\begin{table*}
-\centering
-\begin{tabular}{|l|l|l|l|r|r|r|c|c|}
-\hline
-\textbf{Default} & \textbf{Left} & \textbf{Right} & \textbf{Center} & \textbf{Default} & \textbf{Left} & \textbf{Right} & \textbf{Center} \\ \hline
-12      & 12   &    12 &   12   & 12      & 12   &    12 &   12   \\ \hline
-123     & 123  &   123 &  123   & 123     & 123  &   123 &  123   \\ \hline
-1       & 1    &     1 &   1    & 1       & 1    &     1 &   1    \\ \hline
-\end{tabular}
-\caption{Zweinspaltige Tabelle mittels table*}
-\label{tbl-zweispaltig}
-\end{table*}
-```
-
-Siehe @tbl-zweispaltig
-
-\lipsum
-```{=typst}
- #lorem(50)
-```
-
-# Diskussion
-
-
-Und siehe @tbl-einspaltig
-
-| Default | Left | Right | Center |
-|---------|:-----|------:|:------:|
-| 12      | 12   |    12 |   12   |
-| 123     | 123  |   123 |  123   |
-| 1       | 1    |     1 |   1    |
-
-: Einspaltige Tabelle {#tbl-einspaltig}
-
-\lipsum
 ```{=typst}
  #lorem(50)
 ```
 
 
-## Implikationen
-
-::: {fig-env="figure*" #fig-zweispaltig}
-
-![](_extensions/hsnr-article/HSNRfb10.png)
-Zweinspaltige Breite mittels figure*
-:::
-
-siehe @fig-zweispaltig
-
-\lipsum
-```{=typst}
- #lorem(50)
-```
-
-## Forschungsbedarf
-
-\lipsum
-```{=typst}
- #lorem(50)
-```
-
-# Fazit
-
-\lipsum
-```{=typst}
- #lorem(50)
-```
-
-# Literatur {-}
