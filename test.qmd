@@ -1,0 +1,14 @@
+---
+title: "test"
+format:
+  revealjs: 
+    theme: [HSNR.scss]
+---
+
+## test
+
+::: {.hot-pink}
+
+test
+
+:::

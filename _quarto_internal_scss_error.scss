@@ -1,0 +1,4259 @@
+// quarto-scss-analysis-annotation { "quarto-version": "1.7.6" }
+
+// quarto-scss-analysis-annotation { "origin": "'use' section from format" }
+
+
+
+// quarto-scss-analysis-annotation { "origin": "'use' section from Quarto" }
+
+@use "sass:color" as quarto-color;
+@use "sass:map" as quarto-map;
+@use "sass:math" as quarto-math;
+
+
+// this file is currently intentionally empty
+
+
+// quarto-scss-analysis-annotation { "origin": "'use' section from user-defined SCSS" }
+
+
+
+// quarto-scss-analysis-annotation { "origin": "'functions' section from format" }
+
+
+
+// quarto-scss-analysis-annotation { "origin": "'functions' section from Quarto" }
+
+@function colorToRGB($color) {
+  @return "rgb(" + red($color) + ", " + green($color) + ", " + blue($color) +
+    ")";
+}
+
+@function colorToRGBA($color) {
+  @return "rgba(" + red($color) + ", " + green($color) + ", " + blue($color) +
+    ", " + alpha($color) + ")";
+}
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(
+        str-slice($string, $index + str-length($search)),
+        $search,
+        $replace
+      );
+  }
+  @return $string;
+}
+
+
+@function colorToRGB($color) {
+  @return "rgb(" + red($color) + ", " + green($color) + ", " + blue($color) +
+    ")";
+}
+
+@function tint-color($color, $weight) {
+  @return mix(white, $color, $weight);
+}
+
+@function shade-color($color, $weight) {
+  @return mix(black, $color, $weight);
+}
+
+@function shift-color($color, $weight) {
+  @return if(
+    $weight > 0,
+    shade-color($color, $weight),
+    tint-color($color, -$weight)
+  );
+}
+
+
+// quarto-scss-analysis-annotation { "origin": "'functions' section from user-defined SCSS" }
+
+
+
+// quarto-scss-analysis-annotation { "origin": "Defaults from user-defined SCSS" }
+
+$presentation-heading-color: #185191 !default;
+
+
+
+
+// quarto-scss-analysis-annotation { "origin": "Defaults from Quarto's SCSS" }
+
+
+@import url(./fonts/source-sans-pro/source-sans-pro.css);
+
+// fonts
+$font-family-sans-serif: "Source Sans Pro", Helvetica, sans-serif !default;
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+  "Liberation Mono", "Courier New", monospace !default;
+$presentation-font-size-root: 40px !default;
+$presentation-font-smaller: 0.7 !default;
+$presentation-line-height: 1.3 !default;
+
+// Default variables which exist in bootstrap themes
+// and are here to simplify the implementation of _brand.yml and
+// user theming customization in general
+$font-weight-base: 400 !default;
+$code-font-size: 1em !default;
+$font-family-monospace-block: $font-family-monospace !default;
+$font-family-monospace-inline: $font-family-monospace !default;
+$link-weight: $font-weight-base !default;
+$link-color-bg: transparent !default;
+$link-decoration: inherit !default;
+$font-weight-monospace: $font-weight-base !default;
+$font-weight-monospace-block: $font-weight-monospace !default;
+$font-weight-monospace-inline: $font-weight-monospace !default;
+
+// main colors
+$body-bg: #fff !default;
+$body-color: #222 !default;
+$text-muted: lighten($body-color, 30%) !default;
+
+// grey colors (like in bootstrap)
+$gray-200: #e9ecef !default;
+$gray-100: #f8f9fa !default;
+$gray-900: #212529 !default;
+
+// link colors
+$primary: #2a76dd !default;
+$link-color: $primary !default;
+$link-color-hover: lighten($link-color, 10%) !default;
+
+// selection colors
+$selection-bg: lighten($link-color, 25%) !default;
+$selection-color: $body-bg !default;
+
+// border colors
+$border-color: lighten($body-color, 30%) !default;
+$border-width: 1px !default;
+$border-radius: 4px !default;
+
+// headings
+$presentation-heading-font: $font-family-sans-serif !default;
+$presentation-heading-color: $body-color !default;
+$presentation-heading-line-height: 1.2 !default;
+$presentation-heading-letter-spacing: normal !default;
+$presentation-heading-text-transform: none !default;
+$presentation-heading-text-shadow: none !default;
+$presentation-h1-text-shadow: none !default;
+$presentation-heading-font-weight: 600 !default;
+$presentation-h1-font-size: 2.5em !default;
+$presentation-h2-font-size: 1.6em !default;
+$presentation-h3-font-size: 1.3em !default;
+$presentation-h4-font-size: 1em !default;
+
+// margins
+$presentation-block-margin: 12px !default;
+
+// text alignment
+$presentation-slide-text-align: left !default;
+$presentation-title-slide-text-align: center !default;
+$reveal-slide-text-align: $presentation-slide-text-align !default;
+$reveal-title-slide-text-align: $presentation-title-slide-text-align !default;
+
+// Lists
+$presentation-list-bullet-color: $body-color !default;
+
+// code blocks
+$code-block-bg: $body-bg !default;
+$code-block-border-color: lighten($body-color, 60%) !default;
+$code-block-font-size: $code-font-size * 0.55 !default;
+$code-block-height: 500px !default;
+$code-block-theme-dark-threshhold: 40% !default;
+$code-block-line-height: $presentation-line-height !default;
+$code-block-color: $body-color !default;
+
+// inline code
+$code-inline-font-size: $code-font-size * 0.875 !default;
+$code-color: var(--quarto-hl-fu-color) !default;
+$code-bg: transparent !default;
+
+// tabset
+$tabset-border-color: $code-block-border-color !default;
+
+// table
+$table-border-color: $code-block-border-color !default;
+
+// input panel
+$input-panel-border-color: $code-block-border-color !default;
+$input-panel-border-width: $border-width !default;
+$input-panel-border-radius: $border-radius !default;
+$input-panel-bg: rgba(248, 249, 250, 1) !default;
+
+// Callouts
+$callout-border-width: 0.3rem !default;
+$callout-border-scale: 0% !default;
+$callout-icon-scale: 10% !default;
+$callout-margin-top: 1rem !default;
+$callout-margin-bottom: 1rem !default;
+$callout-color-note: #0d6efd !default;
+$callout-color-tip: #198754 !default;
+$callout-color-important: #dc3545 !default;
+$callout-color-caution: #fd7e14 !default;
+$callout-color-warning: #ffc107 !default;
+
+// alternate colors for when the background changes
+$light-bg-text-color: #222 !default;
+$dark-bg-text-color: #fff !default;
+$light-bg-link-color: #2a76dd !default;
+$dark-bg-link-color: #42affa !default;
+$light-bg-code-color: #4758ab !default;
+$dark-bg-code-color: #ffa07a !default;
+
+// KBD variables
+$kbd-padding-y: 0.4rem !default;
+$kbd-padding-x: 0.4rem !default;
+$kbd-font-size: $presentation-font-size-root !default;
+$kbd-color: $body-color !default;
+$kbd-bg: $gray-100 !default; // like in bootstrap style
+
+// --- derive reveal versions of presentation variables for finer-grained override ---
+
+$revealjs-font-size-root: $presentation-font-size-root !default;
+$revealjs-h1-font-size: $presentation-h1-font-size !default;
+$revealjs-h2-font-size: $presentation-h2-font-size !default;
+$revealjs-h3-font-size: $presentation-h3-font-size !default;
+$revealjs-h4-font-size: $presentation-h4-font-size !default;
+$revealjs-heading-font: $presentation-heading-font !default;
+$revealjs-heading-color: $presentation-heading-color !default;
+$revealjs-heading-line-height: $presentation-heading-line-height !default;
+$revealjs-heading-letter-spacing: $presentation-heading-letter-spacing !default;
+$revealjs-heading-text-transform: $presentation-heading-text-transform !default;
+$revealjs-heading-text-shadow: $presentation-heading-text-shadow !default;
+$revealjs-h1-text-shadow: $presentation-h1-text-shadow !default;
+
+$revealjs-heading-font-weight: $presentation-heading-font-weight !default;
+$revealjs-block-margin: $presentation-block-margin !default;
+$revealjs-line-height: $presentation-line-height !default;
+$revealjs-list-bullet-color: $presentation-list-bullet-color !default;
+
+$revealjs-code-inline-font-size: $code-inline-font-size !default;
+$revealjs-code-block-font-size: $code-block-font-size !default;
+
+// ---- map to reveal scss variables ---
+// ---- This is based from the revealjs setting.scss
+// -- START setting.scss --
+// Background of the presentation
+$backgroundColor: $body-bg !default;
+
+// Primary/body text
+$mainFont: $font-family-sans-serif !default;
+$mainFontSize: $revealjs-font-size-root !default;
+$mainColor: $body-color !default;
+
+// Vertical spacing between blocks of text
+$blockMargin: $revealjs-block-margin !default;
+
+// Headings
+$headingMargin: 0 0 $blockMargin 0 !default;
+$headingFont: $revealjs-heading-font !default;
+$headingColor: $revealjs-heading-color !default;
+$headingLineHeight: $revealjs-heading-line-height !default;
+$headingLetterSpacing: $revealjs-heading-letter-spacing !default;
+$headingTextTransform: $revealjs-heading-text-transform !default;
+$headingTextShadow: $revealjs-heading-text-shadow !default;
+$heading1TextShadow: $revealjs-h1-text-shadow !default;
+$headingFontWeight: $revealjs-heading-font-weight !default;
+
+$heading1Size: $revealjs-h1-font-size !default;
+$heading2Size: $revealjs-h2-font-size !default;
+$heading3Size: $revealjs-h3-font-size !default;
+$heading4Size: $revealjs-h4-font-size !default;
+
+$codeFont: $font-family-monospace !default;
+
+// Links and actions
+$linkColor: $link-color !default;
+$linkColorHover: $link-color-hover !default;
+
+// Text selection
+$selectionBackgroundColor: $selection-bg !default;
+$selectionColor: $selection-color !default;
+
+// Colors used for UI elements that are overlaid on top of
+// the presentation
+$overlayElementBgColor: 240, 240, 240 !default;
+$overlayElementFgColor: 0, 0, 0 !default;
+
+// -- END setting.scss --
+
+$code-copy-selector: "pre.sourceCode:hover > " !default;
+$code-white-space: pre !default;
+$tbl-cap-location: top !default;
+// main colors
+$body-bg: #fff !default;
+$body-color: #222 !default;
+$text-muted: lighten($body-color, 30%) !default;
+
+// border colors
+$border-color: lighten($body-color, 30%) !default;
+$table-border-color: $border-color !default;
+$border-width: 1px !default;
+$border-radius: 4px !default;
+
+// code block colors
+$btn-code-copy-color: if(
+  variable-exists(text-muted),
+  $text-muted,
+  if(variable-exists(body-color), $body-color, $gray-900)
+) !default;
+
+$btn-code-copy-color-active: if(
+  variable-exists(link-color),
+  $link-color,
+  #0d6efd
+) !default;
+
+
+// quarto-scss-analysis-annotation { "origin": "Defaults from the format SCSS" }
+
+
+
+// quarto-scss-analysis-annotation { "origin": "'mixins' section from format" }
+
+@mixin vertical-gradient( $top, $bottom ) {
+	background: $top;
+	background: -moz-linear-gradient( top, $top 0%, $bottom 100% );
+	background: -webkit-gradient( linear, left top, left bottom, color-stop(0%,$top), color-stop(100%,$bottom) );
+	background: -webkit-linear-gradient( top, $top 0%, $bottom 100% );
+	background: -o-linear-gradient( top, $top 0%, $bottom 100% );
+	background: -ms-linear-gradient( top, $top 0%, $bottom 100% );
+	background: linear-gradient( top, $top 0%, $bottom 100% );
+}
+
+@mixin horizontal-gradient( $top, $bottom ) {
+	background: $top;
+	background: -moz-linear-gradient( left, $top 0%, $bottom 100% );
+	background: -webkit-gradient( linear, left top, right top, color-stop(0%,$top), color-stop(100%,$bottom) );
+	background: -webkit-linear-gradient( left, $top 0%, $bottom 100% );
+	background: -o-linear-gradient( left, $top 0%, $bottom 100% );
+	background: -ms-linear-gradient( left, $top 0%, $bottom 100% );
+	background: linear-gradient( left, $top 0%, $bottom 100% );
+}
+
+@mixin radial-gradient( $outer, $inner, $type: circle ) {
+	background: $outer;
+	background: -moz-radial-gradient( center, $type cover,  $inner 0%, $outer 100% );
+	background: -webkit-gradient( radial, center center, 0px, center center, 100%, color-stop(0%,$inner), color-stop(100%,$outer) );
+	background: -webkit-radial-gradient( center, $type cover,  $inner 0%, $outer 100% );
+	background: -o-radial-gradient( center, $type cover,  $inner 0%, $outer 100% );
+	background: -ms-radial-gradient( center, $type cover,  $inner 0%, $outer 100% );
+	background: radial-gradient( center, $type cover,  $inner 0%, $outer 100% );
+}
+
+@mixin light-bg-text-color( $color ) {
+	section.has-light-background {
+		&, h1, h2, h3, h4, h5, h6 {
+			color: $color;
+		}
+	}
+}
+
+@mixin dark-bg-text-color( $color ) {
+	section.has-dark-background {
+		&, h1, h2, h3, h4, h5, h6 {
+			color: $color;
+		}
+	}
+}
+
+// quarto-scss-analysis-annotation { "origin": "'mixins' section from Quarto" }
+
+
+@mixin shift_to_dark($property, $colorDark, $colorLight) {
+  @if (
+    quarto-color.blackness($backgroundColor) > $code-block-theme-dark-threshhold
+  ) {
+    #{$property}: $colorDark;
+  } @else {
+    #{$property}: $colorLight;
+  }
+}
+
+// Make the font size smaller by a factor of $times
+// Useful for font-size defined in px inside smaller font size controled by em
+// as they would not be impacted by the smaller font size
+@mixin make-smaller-font-size($element, $times: 1) {
+  font-size: calc(
+    #{$element} * #{quarto-math.pow($presentation-font-smaller, $times)}
+  );
+}
+
+// Undo the smaller font size
+// Useful for font-size in em already that should not be impacted by smaller font size controled by em
+@mixin undo-smaller-font-size($element) {
+  font-size: calc(#{$element} / #{$presentation-font-smaller});
+}
+
+// -- START setting.scss --
+
+// Generates the presentation background, can be overridden
+// to return a background image or gradient
+@mixin bodyBackground() {
+  background: $backgroundColor;
+}
+
+// -- END setting.scss --
+
+
+// quarto-scss-analysis-annotation { "origin": "'mixins' section from user-defined SCSS" }
+
+
+
+// quarto-scss-analysis-annotation { "origin": "'rules' section from format" }
+
+// Base theme template for reveal.js
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+
+@import "./exposer";
+
+.reveal-viewport {
+	@include bodyBackground();
+	background-color: var(--r-background-color);
+}
+
+.reveal {
+	font-family: var(--r-main-font);
+	font-size: var(--r-main-font-size);
+	font-weight: normal;
+	color: var(--r-main-color);
+}
+
+.reveal ::selection {
+	color: var(--r-selection-color);
+	background: var(--r-selection-background-color);
+	text-shadow: none;
+}
+
+.reveal ::-moz-selection {
+	color: var(--r-selection-color);
+	background: var(--r-selection-background-color);
+	text-shadow: none;
+}
+
+.reveal .slides section,
+.reveal .slides section>section {
+	line-height: 1.3;
+	font-weight: inherit;
+}
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+	margin: var(--r-heading-margin);
+	color: var(--r-heading-color);
+
+	font-family: var(--r-heading-font);
+	font-weight: var(--r-heading-font-weight);
+	line-height: var(--r-heading-line-height);
+	letter-spacing: var(--r-heading-letter-spacing);
+
+	text-transform: var(--r-heading-text-transform);
+	text-shadow: var(--r-heading-text-shadow);
+
+	word-wrap: break-word;
+}
+
+.reveal h1 {font-size: var(--r-heading1-size); }
+.reveal h2 {font-size: var(--r-heading2-size); }
+.reveal h3 {font-size: var(--r-heading3-size); }
+.reveal h4 {font-size: var(--r-heading4-size); }
+
+.reveal h1 {
+	text-shadow: var(--r-heading1-text-shadow);
+}
+
+
+/*********************************************
+ * OTHER
+ *********************************************/
+
+.reveal p {
+	margin: var(--r-block-margin) 0;
+	line-height: 1.3;
+}
+
+/* Remove trailing margins after titles */
+.reveal h1:last-child,
+.reveal h2:last-child,
+.reveal h3:last-child,
+.reveal h4:last-child,
+.reveal h5:last-child,
+.reveal h6:last-child {
+	margin-bottom: 0;
+}
+
+/* Ensure certain elements are never larger than the slide itself */
+.reveal img,
+.reveal video,
+.reveal iframe {
+	max-width: 95%;
+	max-height: 95%;
+}
+.reveal strong,
+.reveal b {
+	font-weight: bold;
+}
+
+.reveal em {
+	font-style: italic;
+}
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+	display: inline-block;
+
+	text-align: left;
+	margin: 0 0 0 1em;
+}
+
+.reveal ol {
+	list-style-type: decimal;
+}
+
+.reveal ul {
+	list-style-type: disc;
+}
+
+.reveal ul ul {
+	list-style-type: square;
+}
+
+.reveal ul ul ul {
+	list-style-type: circle;
+}
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+	display: block;
+	margin-left: 40px;
+}
+
+.reveal dt {
+	font-weight: bold;
+}
+
+.reveal dd {
+	margin-left: 40px;
+}
+
+.reveal blockquote {
+	display: block;
+	position: relative;
+	width: 70%;
+	margin: var(--r-block-margin) auto;
+	padding: 5px;
+
+	font-style: italic;
+	background: rgba(255, 255, 255, 0.05);
+	box-shadow: 0px 0px 2px rgba(0,0,0,0.2);
+}
+	.reveal blockquote p:first-child,
+	.reveal blockquote p:last-child {
+		display: inline-block;
+	}
+
+.reveal q {
+	font-style: italic;
+}
+
+.reveal pre {
+	display: block;
+	position: relative;
+	width: 90%;
+	margin: var(--r-block-margin) auto;
+
+	text-align: left;
+	font-size: 0.55em;
+	font-family: var(--r-code-font);
+	line-height: 1.2em;
+
+	word-wrap: break-word;
+
+	box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.reveal code {
+	font-family: var(--r-code-font);
+	text-transform: none;
+	tab-size: 2;
+}
+
+.reveal pre code {
+	display: block;
+	padding: 5px;
+	overflow: auto;
+	max-height: 400px;
+	word-wrap: normal;
+}
+
+.reveal .code-wrapper {
+	white-space: normal;
+}
+
+.reveal .code-wrapper code {
+	white-space: pre;
+}
+
+.reveal table {
+	margin: auto;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.reveal table th {
+	font-weight: bold;
+}
+
+.reveal table th,
+.reveal table td {
+	text-align: left;
+	padding: 0.2em 0.5em 0.2em 0.5em;
+	border-bottom: 1px solid;
+}
+
+.reveal table th[align="center"],
+.reveal table td[align="center"] {
+	text-align: center;
+}
+
+.reveal table th[align="right"],
+.reveal table td[align="right"] {
+	text-align: right;
+}
+
+.reveal table tbody tr:last-child th,
+.reveal table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.reveal sup {
+	vertical-align: super;
+	font-size: smaller;
+}
+.reveal sub {
+	vertical-align: sub;
+	font-size: smaller;
+}
+
+.reveal small {
+	display: inline-block;
+	font-size: 0.6em;
+	line-height: 1.2em;
+	vertical-align: top;
+}
+
+.reveal small * {
+	vertical-align: top;
+}
+
+.reveal img {
+	margin: var(--r-block-margin) 0;
+}
+
+
+/*********************************************
+ * LINKS
+ *********************************************/
+
+.reveal a {
+	color: var(--r-link-color);
+	text-decoration: none;
+	transition: color .15s ease;
+}
+	.reveal a:hover {
+		color: var(--r-link-color-hover);
+		text-shadow: none;
+		border: none;
+	}
+
+.reveal .roll span:after {
+	color: #fff;
+	// background: darken( var(--r-link-color), 15% );
+	 background: var(--r-link-color-dark);
+
+}
+
+
+/*********************************************
+ * Frame helper
+ *********************************************/
+
+.reveal .r-frame {
+	border: 4px solid var(--r-main-color);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.reveal a .r-frame {
+	transition: all .15s linear;
+}
+
+.reveal a:hover .r-frame {
+	border-color: var(--r-link-color);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+}
+
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+
+.reveal .controls {
+	color: var(--r-link-color);
+}
+
+
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+
+.reveal .progress {
+	background: rgba(0,0,0,0.2);
+	color: var(--r-link-color);
+}
+
+/*********************************************
+ * PRINT BACKGROUND
+ *********************************************/
+ @media print {
+    .backgrounds {
+        background-color: var(--r-background-color);
+    }
+}
+
+
+// quarto-scss-analysis-annotation { "origin": "'rules' section from Quarto" }
+
+// floating
+
+.top-right {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+}
+
+// hidden
+
+// https://github.com/quarto-dev/quarto-cli/issues/5403#issuecomment-1533791947
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.zindex-bottom {
+  z-index: -1 !important;
+}
+
+// layout and figures
+
+figure.figure {
+  display: block;
+}
+
+.quarto-layout-panel {
+  margin-bottom: 1em;
+}
+
+.quarto-layout-panel > figure {
+  width: 100%;
+}
+.quarto-layout-panel > figure > figcaption,
+.quarto-layout-panel > .panel-caption {
+  margin-top: 10pt;
+}
+
+.quarto-layout-panel > .table-caption {
+  margin-top: 0px;
+}
+
+.table-caption p {
+  margin-bottom: 0.5em;
+}
+
+.quarto-layout-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.quarto-layout-valign-top {
+  align-items: flex-start;
+}
+.quarto-layout-valign-bottom {
+  align-items: flex-end;
+}
+.quarto-layout-valign-center {
+  align-items: center;
+}
+.quarto-layout-cell {
+  position: relative;
+  margin-right: 20px;
+}
+.quarto-layout-cell:last-child {
+  margin-right: 0;
+}
+.quarto-layout-cell figure,
+.quarto-layout-cell > p {
+  margin: 0.2em;
+}
+.quarto-layout-cell img {
+  max-width: 100%;
+}
+.quarto-layout-cell .html-widget {
+  width: 100% !important;
+}
+.quarto-layout-cell div figure p {
+  margin: 0;
+}
+.quarto-layout-cell figure {
+  display: block;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+.quarto-layout-cell table {
+  display: inline-table;
+}
+.quarto-layout-cell-subref figcaption,
+figure .quarto-layout-row figure figcaption {
+  text-align: center;
+  font-style: italic;
+}
+.quarto-figure {
+  position: relative;
+  margin-bottom: 1em;
+}
+
+.quarto-figure > figure {
+  width: 100%;
+  margin-bottom: 0;
+}
+.quarto-figure-left > figure > p,
+.quarto-figure-left > figure > div /* for mermaid and dot diagrams */ {
+  text-align: left;
+}
+.quarto-figure-center > figure > p,
+.quarto-figure-center > figure > div /* for mermaid and dot diagrams */ {
+  text-align: center;
+}
+.quarto-figure-right > figure > p,
+.quarto-figure-right > figure > div /* for mermaid and dot diagrams */ {
+  text-align: right;
+}
+
+.quarto-figure > figure > div.cell-annotation,
+.quarto-figure > figure > div code {
+  text-align: left; /* override align center for code blocks */
+}
+
+figure > p:empty {
+  display: none;
+}
+figure > p:first-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+figure > figcaption.quarto-float-caption-bottom {
+  margin-bottom: 0.5em;
+}
+figure > figcaption.quarto-float-caption-top {
+  margin-top: 0.5em;
+}
+
+// anchor
+
+// anchor js
+
+div[id^="tbl-"] {
+  position: relative;
+}
+
+.quarto-figure > .anchorjs-link {
+  position: absolute;
+  top: 0.6em;
+  right: 0.5em;
+}
+
+div[id^="tbl-"] > .anchorjs-link {
+  position: absolute;
+  top: 0.7em;
+  right: 0.3em;
+}
+
+/* workaround for anchorjs not hitting on generic :hover selector */
+.quarto-figure:hover > .anchorjs-link,
+div[id^="tbl-"]:hover > .anchorjs-link,
+h2:hover > .anchorjs-link,
+h3:hover > .anchorjs-link,
+h4:hover > .anchorjs-link,
+h5:hover > .anchorjs-link,
+h6:hover > .anchorjs-link,
+.reveal-anchorjs-link > .anchorjs-link {
+  opacity: 1;
+}
+
+#title-block-header {
+  margin-block-end: 1rem;
+  position: relative;
+  margin-top: -1px; // Chrome draws 1px white line between navbar and title block
+}
+
+#title-block-header .abstract {
+  margin-block-start: 1rem;
+}
+
+#title-block-header .abstract .abstract-title {
+  font-weight: 600;
+}
+
+#title-block-header a {
+  text-decoration: none;
+}
+
+#title-block-header .author,
+#title-block-header .date,
+#title-block-header .doi {
+  margin-block-end: 0.2rem;
+}
+
+#title-block-header .quarto-title-block > div {
+  display: flex;
+}
+
+#title-block-header .quarto-title-block > div > h1 {
+  flex-grow: 1;
+}
+
+#title-block-header .quarto-title-block > div > button {
+  flex-shrink: 0;
+  height: 2.25rem;
+  margin-top: 0;
+}
+
+#title-block-header .quarto-title-block > div > button {
+  @if mixin-exists(media-breakpoint-up) {
+    @include media-breakpoint-up(lg) {
+      margin-top: 5px;
+    }
+  }
+}
+
+// (Remove bottom margin from paragraphs in table headers)
+tr.header > th > p:last-of-type {
+  margin-bottom: 0px;
+}
+
+table,
+table.table {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+caption,
+.table-caption {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  text-align: center;
+}
+
+figure.quarto-float-tbl figcaption.quarto-float-caption-top {
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+
+figure.quarto-float-tbl figcaption.quarto-float-caption-bottom {
+  padding-top: 0.25rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+// utterances
+.utterances {
+  max-width: none;
+  margin-left: -8px;
+}
+
+// iframe
+iframe {
+  margin-bottom: 1em;
+}
+
+// details
+details {
+  margin-bottom: 1em;
+}
+details[show] {
+  margin-bottom: 0;
+}
+
+details > summary {
+  @if variable-exists(text-muted) {
+    color: $text-muted;
+  }
+}
+
+details > summary > p:only-child {
+  display: inline;
+}
+
+// codeCopy
+pre.sourceCode,
+code.sourceCode {
+  position: relative;
+}
+
+// Inline code should wrap
+// See https://github.com/quarto-dev/quarto-cli/issues/2649
+dd code:not(.sourceCode),
+p code:not(.sourceCode) {
+  white-space: pre-wrap;
+}
+
+// default to scrolling <code> output rather than wrapping, since
+// multi-column tabular output (very common for R & Python) is
+// unreadable when wrapped.
+code {
+  white-space: pre;
+}
+@media print {
+  code {
+    white-space: pre-wrap;
+  }
+}
+pre > code {
+  display: block;
+}
+
+pre > code.sourceCode {
+  white-space: $code-white-space;
+}
+
+pre > code.sourceCode > span > a:first-child::before {
+  text-decoration: none;
+}
+
+pre.code-overflow-wrap > code.sourceCode {
+  white-space: pre-wrap;
+}
+
+pre.code-overflow-scroll > code.sourceCode {
+  white-space: pre;
+}
+
+// code linking (pkgdown style)
+code a:any-link {
+  color: inherit;
+  text-decoration: none;
+}
+code a:hover {
+  color: inherit;
+  text-decoration: underline;
+}
+
+// task lists
+ul.task-list {
+  padding-left: 1em;
+}
+
+// tippy
+
+[data-tippy-root] {
+  display: inline-block;
+}
+
+.tippy-content .footnote-back {
+  display: none;
+}
+
+.footnote-back {
+  margin-left: 0.2em;
+}
+
+.tippy-content {
+  overflow-x: auto;
+}
+
+// embedded source code
+.quarto-embedded-source-code {
+  display: none;
+}
+
+// unresolved crossrefs
+.quarto-unresolved-ref {
+  font-weight: 600;
+}
+
+// html cover image injection
+.quarto-cover-image {
+  max-width: 35%;
+  float: right;
+  margin-left: 30px;
+}
+
+// provide margin below jupyter widgets
+.cell-output-display .widget-subarea {
+  margin-bottom: 1em;
+}
+
+// fix for selectize inputs getting their contents clipped
+// this also works for knitr sql cells (see github issue #3497)
+.cell-output-display:not(.no-overflow-x),
+.knitsql-table:not(.no-overflow-x) {
+  overflow-x: auto;
+}
+
+.panel-input {
+  margin-bottom: 1em;
+}
+
+.panel-input > div,
+.panel-input > div > div {
+  display: inline-block;
+  vertical-align: top;
+  padding-right: 12px;
+}
+
+.panel-input > p:last-child {
+  margin-bottom: 0;
+}
+
+.layout-sidebar {
+  margin-bottom: 1em;
+}
+
+.layout-sidebar .tab-content {
+  border: none;
+}
+
+.tab-content > .page-columns.active {
+  display: grid;
+}
+
+// default styling for .code-preview=".." iframes
+div.sourceCode > iframe {
+  width: 100%;
+  height: 300px;
+
+  // this negative-margin hack works around the rendering issue with
+  // iframes and parent elements with rounded corners if the border
+  // radius for (eg) div.sourceCode is changed, this is likely going
+  // to need changing as well.
+  @if variable-exists(code-preview-margin-bottom) {
+    margin-bottom: $code-preview-margin-bottom;
+  } @else {
+    margin-bottom: -0.5em;
+  }
+  @if variable-exists(code-preview-border-color) {
+    border: $code-preview-border-color;
+  }
+}
+
+// link styling
+a {
+  text-underline-offset: 3px;
+}
+
+/* Callout styling */
+
+.callout pre.sourceCode {
+  padding-left: 0;
+}
+
+// ansi escaping
+div.ansi-escaped-output {
+  font-family: monospace;
+  display: block;
+}
+
+/*!
+*
+* ansi colors from IPython notebook's
+*
+* we also add `bright-[color]-` synonyms for the `-[color]-intense` classes since
+* that seems to be what ansi_up emits
+*
+*/
+/* CSS font colors for translated ANSI escape sequences */
+/* The color values are a mix of
+   http://www.xcolors.net/dl/baskerville-ivorylight and
+   http://www.xcolors.net/dl/euphrasia */
+.ansi-black-fg {
+  color: #3e424d;
+}
+.ansi-black-bg {
+  background-color: #3e424d;
+}
+.ansi-black-intense-black,
+.ansi-bright-black-fg {
+  color: #282c36;
+}
+.ansi-black-intense-black,
+.ansi-bright-black-bg {
+  background-color: #282c36;
+}
+.ansi-red-fg {
+  color: #e75c58;
+}
+.ansi-red-bg {
+  background-color: #e75c58;
+}
+.ansi-red-intense-red,
+.ansi-bright-red-fg {
+  color: #b22b31;
+}
+.ansi-red-intense-red,
+.ansi-bright-red-bg {
+  background-color: #b22b31;
+}
+.ansi-green-fg {
+  color: #00a250;
+}
+.ansi-green-bg {
+  background-color: #00a250;
+}
+.ansi-green-intense-green,
+.ansi-bright-green-fg {
+  color: #007427;
+}
+.ansi-green-intense-green,
+.ansi-bright-green-bg {
+  background-color: #007427;
+}
+.ansi-yellow-fg {
+  color: #ddb62b;
+}
+.ansi-yellow-bg {
+  background-color: #ddb62b;
+}
+.ansi-yellow-intense-yellow,
+.ansi-bright-yellow-fg {
+  color: #b27d12;
+}
+.ansi-yellow-intense-yellow,
+.ansi-bright-yellow-bg {
+  background-color: #b27d12;
+}
+.ansi-blue-fg {
+  color: #208ffb;
+}
+.ansi-blue-bg {
+  background-color: #208ffb;
+}
+.ansi-blue-intense-blue,
+.ansi-bright-blue-fg {
+  color: #0065ca;
+}
+.ansi-blue-intense-blue,
+.ansi-bright-blue-bg {
+  background-color: #0065ca;
+}
+.ansi-magenta-fg {
+  color: #d160c4;
+}
+.ansi-magenta-bg {
+  background-color: #d160c4;
+}
+.ansi-magenta-intense-magenta,
+.ansi-bright-magenta-fg {
+  color: #a03196;
+}
+.ansi-magenta-intense-magenta,
+.ansi-bright-magenta-bg {
+  background-color: #a03196;
+}
+.ansi-cyan-fg {
+  color: #60c6c8;
+}
+.ansi-cyan-bg {
+  background-color: #60c6c8;
+}
+.ansi-cyan-intense-cyan,
+.ansi-bright-cyan-fg {
+  color: #258f8f;
+}
+.ansi-cyan-intense-cyan,
+.ansi-bright-cyan-bg {
+  background-color: #258f8f;
+}
+.ansi-white-fg {
+  color: #c5c1b4;
+}
+.ansi-white-bg {
+  background-color: #c5c1b4;
+}
+.ansi-white-intense-white,
+.ansi-bright-white-fg {
+  color: #a1a6b2;
+}
+.ansi-white-intense-white,
+.ansi-bright-white-bg {
+  background-color: #a1a6b2;
+}
+.ansi-default-inverse-fg {
+  color: #ffffff;
+}
+.ansi-default-inverse-bg {
+  background-color: #000000;
+}
+.ansi-bold {
+  font-weight: bold;
+}
+.ansi-underline {
+  text-decoration: underline;
+}
+
+:root {
+  --quarto-body-bg: #{$body-bg};
+  --quarto-body-color: #{$body-color};
+  --quarto-text-muted: #{$text-muted};
+  --quarto-border-color: #{$table-border-color};
+  --quarto-border-width: #{$border-width};
+  @if not variable-exists(enable-rounded) or $enable-rounded == true {
+    --quarto-border-radius: #{$border-radius};
+  }
+}
+
+/* rules to support GT table styling */
+table.gt_table {
+  color: var(--quarto-body-color);
+  font-size: 1em;
+  width: 100%; // to match other table styling
+  background-color: transparent;
+  border-top-width: inherit;
+  border-bottom-width: inherit;
+  border-color: var(--quarto-border-color);
+}
+
+table.gt_table th.gt_column_spanner_outer {
+  color: var(--quarto-body-color);
+  background-color: transparent;
+  border-top-width: inherit;
+  border-bottom-width: inherit;
+  border-color: var(--quarto-border-color);
+}
+
+table.gt_table th.gt_col_heading {
+  color: var(--quarto-body-color);
+  font-weight: bold;
+  background-color: transparent;
+}
+
+table.gt_table thead.gt_col_headings {
+  border-bottom: 1px solid currentColor;
+  border-top-width: inherit;
+  border-top-color: var(--quarto-border-color);
+}
+
+table.gt_table thead.gt_col_headings:not(:first-child) {
+  border-top-width: 1px;
+  border-top-color: var(--quarto-border-color);
+}
+
+table.gt_table td.gt_row {
+  border-bottom-width: 1px;
+  border-bottom-color: var(--quarto-border-color);
+  border-top-width: 0px;
+}
+
+table.gt_table tbody.gt_table_body {
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-bottom-color: var(--quarto-border-color);
+  border-top-color: currentColor;
+}
+
+/* restore previous pandoc columns behavior 
+   (too many reports of slide layout breaking)
+   see https://github.com/jgm/pandoc/pull/8237
+*/
+div.columns {
+  display: initial;
+  gap: initial;
+}
+div.column {
+  display: inline-block;
+  overflow-x: initial;
+  vertical-align: top;
+  width: 50%;
+}
+
+// Code Annotation LayoutBoot
+.code-annotation-tip-content {
+  word-wrap: break-word;
+}
+
+.code-annotation-container-hidden {
+  display: none !important;
+}
+
+dl.code-annotation-container-grid {
+  display: grid;
+  grid-template-columns: min-content auto;
+  dt {
+    grid-column: 1;
+  }
+  dd {
+    grid-column: 2;
+  }
+}
+
+pre.sourceCode.code-annotation-code {
+  padding-right: 0;
+}
+
+code.sourceCode .code-annotation-anchor {
+  z-index: 100;
+  position: relative;
+  float: right;
+  background-color: transparent;
+}
+
+// Add a bit of margin to the right of a checkbox
+// https://github.com/quarto-dev/quarto-cli/issues/6627
+input[type="checkbox"] {
+  margin-right: 0.5ch;
+}
+
+// Mermaid Theming
+// if none come from theme, we need these
+$body-color: #222 !default;
+$body-bg: #fff !default;
+$primary: #468 !default;
+$secondary: #999 !default;
+$font-family-sans-serif: sans-serif !default;
+$font-weight-base: 400 !default;
+
+/* SCSS variables
+
+   These are documented in quarto-cli/quarto-web:docs/authoring/_mermaid-theming.qmd
+
+   Make sure to update the docs if you change these.
+*/
+$mermaid-bg-color: $body-bg !default;
+$mermaid-edge-color: $secondary !default;
+$mermaid-node-fg-color: $body-color !default;
+$mermaid-fg-color: $body-color !default;
+$mermaid-fg-color--lighter: lighten($body-color, 10%) !default;
+$mermaid-fg-color--lightest: lighten($body-color, 20%) !default;
+$mermaid-font-family: $font-family-sans-serif !default;
+$mermaid-font-weight: $font-weight-base !default;
+$mermaid-label-bg-color: $body-bg !default;
+$mermaid-label-fg-color: $primary !default;
+$mermaid-node-bg-color: rgba($primary, 0.1) !default;
+$mermaid-node-fg-color: $primary !default;
+
+/* CSS variables */
+:root {
+  --mermaid-bg-color: #{$mermaid-bg-color};
+  --mermaid-edge-color: #{$mermaid-edge-color};
+  --mermaid-node-fg-color: #{$mermaid-node-fg-color};
+  --mermaid-fg-color: #{$mermaid-fg-color};
+  --mermaid-fg-color--lighter: #{$mermaid-fg-color--lighter};
+  --mermaid-fg-color--lightest: #{$mermaid-fg-color--lightest};
+  --mermaid-font-family: #{$mermaid-font-family};
+  --mermaid-label-bg-color: #{$mermaid-label-bg-color};
+  --mermaid-label-fg-color: #{$mermaid-label-fg-color};
+  --mermaid-node-bg-color: #{$mermaid-node-bg-color};
+  --mermaid-node-fg-color: #{$mermaid-node-fg-color};
+}
+
+@media print {
+  :root {
+    font-size: 11pt;
+  }
+  #quarto-sidebar,
+  #TOC,
+  .nav-page {
+    display: none;
+  }
+  .page-columns .content {
+    grid-column-start: page-start;
+  }
+  .fixed-top {
+    position: relative;
+  }
+  .panel-caption,
+  .figure-caption,
+  figcaption {
+    color: #666;
+  }
+}
+
+.code-copy-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  margin-top: 5px;
+  margin-right: 5px;
+  background-color: transparent;
+  z-index: 3;
+}
+
+.code-copy-button:focus {
+  outline: none;
+}
+
+.code-copy-button-tooltip {
+  font-size: 0.75em;
+}
+
+#{$code-copy-selector} .code-copy-button > .bi::before {
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  content: "";
+  vertical-align: -0.125em;
+  @if variable-exists(btn-code-copy-color) {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#{colorToRGB($btn-code-copy-color)}" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>');
+  } @else {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>');
+  }
+  background-repeat: no-repeat;
+  background-size: 1rem 1rem;
+}
+
+#{$code-copy-selector} .code-copy-button-checked > .bi::before {
+  @if variable-exists(btn-code-copy-color) {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#{colorToRGB($btn-code-copy-color)}" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>');
+  } @else {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>');
+  }
+}
+
+@if variable-exists(btn-code-copy-color-active) {
+  #{$code-copy-selector} .code-copy-button:hover > .bi::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#{colorToRGB($btn-code-copy-color-active)}" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>');
+  }
+  #{$code-copy-selector} .code-copy-button-checked:hover > .bi::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#{colorToRGB($btn-code-copy-color-active)}"  viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>');
+  }
+}
+
+$body-bg: #fff !default;
+$tabset-border-color: rgb(222, 226, 230) !default;
+
+.panel-tabset [role="tablist"] {
+  border-bottom: 1px solid $tabset-border-color;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.panel-tabset [role="tablist"] * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media (min-width: 30em) {
+  .panel-tabset [role="tablist"] li {
+    display: inline-block;
+  }
+}
+
+.panel-tabset [role="tab"] {
+  border: 1px solid transparent;
+  border-top-color: $tabset-border-color;
+  display: block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+}
+
+@media (min-width: 30em) {
+  .panel-tabset [role="tab"] {
+    border-top-color: transparent;
+    display: inline-block;
+    margin-bottom: -1px;
+  }
+}
+
+.panel-tabset [role="tab"][aria-selected="true"] {
+  background-color: $tabset-border-color;
+}
+
+@media (min-width: 30em) {
+  .panel-tabset [role="tab"][aria-selected="true"] {
+    background-color: transparent;
+    border: 1px solid $tabset-border-color;
+    border-bottom-color: $body-bg;
+  }
+}
+
+@media (min-width: 30em) {
+  .panel-tabset [role="tab"]:hover:not([aria-selected="true"]) {
+    border: 1px solid $tabset-border-color;
+  }
+}
+
+.code-with-filename .code-with-filename-file {
+  margin-bottom: 0;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  padding-left: 0.7em;
+  border: var(--quarto-border-width) solid var(--quarto-border-color);
+  border-radius: var(--quarto-border-radius);
+  border-bottom: 0;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+}
+
+.code-with-filename div.sourceCode,
+.reveal .code-with-filename div.sourceCode {
+  margin-top: 0;
+  border-top-left-radius: 0%;
+  border-top-right-radius: 0%;
+}
+
+.code-with-filename .code-with-filename-file pre {
+  margin-bottom: 0;
+}
+
+.code-with-filename .code-with-filename-file {
+  background-color: rgba(219, 219, 219, 0.8);
+}
+
+.quarto-dark .code-with-filename .code-with-filename-file {
+  background-color: #555;
+}
+
+.code-with-filename .code-with-filename-file strong {
+  font-weight: 400;
+}
+
+
+.reveal.center .slide aside,
+.reveal.center .slide div.aside {
+  position: initial;
+}
+
+section.has-light-background {
+  &,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $light-bg-text-color;
+  }
+  a,
+  a:hover {
+    color: $light-bg-link-color;
+  }
+  code {
+    color: $light-bg-code-color;
+  }
+}
+
+section.has-dark-background {
+  &,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $dark-bg-text-color;
+  }
+  a,
+  a:hover {
+    color: $dark-bg-link-color;
+  }
+  code {
+    color: $dark-bg-code-color;
+  }
+}
+
+#title-slide,
+/* for when hash-type: number as identifier removed*/
+div.reveal div.slides section.quarto-title-block {
+  text-align: $presentation-title-slide-text-align;
+  .subtitle {
+    margin-bottom: 2.5rem;
+  }
+}
+
+.reveal .slides {
+  text-align: $reveal-slide-text-align;
+}
+
+.reveal .title-slide h1 {
+  font-size: $revealjs-h2-font-size;
+}
+
+.reveal[data-navigation-mode="linear"] .title-slide h1 {
+  font-size: $revealjs-h1-font-size;
+}
+
+.reveal div.sourceCode {
+  border: $border-width solid $code-block-border-color;
+  border-radius: $border-radius;
+}
+
+.reveal pre {
+  width: 100%;
+  box-shadow: none;
+  background-color: $code-block-bg;
+  border: none;
+  margin: 0;
+  font-size: $revealjs-code-block-font-size;
+  line-height: $code-block-line-height;
+  font-family: $font-family-monospace-block;
+
+  code {
+    background-color: $body-bg; // Insure we color output and code cell differently
+    font-size: inherit;
+    color: $code-block-color;
+    font-family: inherit;
+  }
+
+  &.sourceCode code {
+    color: $code-block-color;
+    font-size: inherit;
+    background-color: inherit;
+    white-space: pre;
+    font-family: inherit;
+    padding: 6px 9px;
+    max-height: $code-block-height;
+  }
+}
+
+// Inside code-file-name div, we want to use the same background color as decorated codeblock header
+// https://github.com/quarto-dev/quarto-cli/issues/9560
+.reveal .code-with-filename .code-with-filename-file pre {
+  background-color: unset;
+}
+
+.reveal code {
+  color: $code-color;
+  font-size: $revealjs-code-inline-font-size;
+  background-color: $code-bg;
+  white-space: pre-wrap;
+  font-family: $font-family-monospace-inline;
+}
+
+.reveal .column-output-location {
+  display: flex;
+  align-items: stretch;
+}
+
+.reveal .column-output-location .column:first-of-type div.sourceCode {
+  height: 100%;
+  background-color: $code-block-bg;
+}
+
+.reveal blockquote {
+  display: block;
+  position: relative;
+  color: $border-color;
+  width: unset;
+  margin: var(--r-block-margin) auto;
+  padding: 0.625rem 1.75rem;
+  border-left: 0.25rem solid $text-muted;
+  font-style: normal;
+  background: none;
+  box-shadow: none;
+}
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child {
+  display: block;
+}
+
+.reveal .slide aside,
+.reveal .slide div.aside {
+  position: absolute;
+  bottom: 20px;
+  font-size: #{$presentation-font-smaller}em;
+  color: $text-muted;
+}
+
+.reveal .slide sup {
+  font-size: #{$presentation-font-smaller}em;
+}
+
+.reveal .slide.scrollable aside,
+.reveal .slide.scrollable div.aside {
+  position: relative;
+  margin-top: 1em;
+}
+
+.reveal .slide aside .aside-footnotes {
+  margin-bottom: 0;
+}
+
+.reveal .slide aside .aside-footnotes li:first-of-type {
+  margin-top: 0;
+}
+
+$panel-sidebar-width: 270px;
+$panel-sidebar-padding: 0.5em;
+
+.reveal .layout-sidebar {
+  display: flex;
+  width: 100%;
+  margin-top: 0.8em;
+}
+
+.reveal .layout-sidebar .panel-sidebar {
+  width: $panel-sidebar-width;
+}
+
+.reveal .layout-sidebar-left .panel-sidebar {
+  margin-right: calc(#{$panel-sidebar-padding} * 2);
+}
+
+.reveal .layout-sidebar-right .panel-sidebar {
+  margin-left: calc(#{$panel-sidebar-padding} * 2);
+}
+
+.reveal .layout-sidebar .panel-fill,
+.reveal .layout-sidebar .panel-center,
+.reveal .layout-sidebar .panel-tabset {
+  flex: 1;
+}
+
+.reveal .panel-input,
+.reveal .panel-sidebar {
+  font-size: 0.5em;
+  padding: $panel-sidebar-padding;
+  border-style: solid;
+  border-color: $input-panel-border-color;
+  border-width: $input-panel-border-width;
+  border-radius: $input-panel-border-radius;
+  background-color: $input-panel-bg;
+}
+
+.reveal .panel-sidebar :first-child,
+.reveal .panel-fill :first-child {
+  margin-top: 0;
+}
+
+.reveal .panel-sidebar :last-child,
+.reveal .panel-fill :last-child {
+  margin-bottom: 0;
+}
+
+.panel-input > div,
+.panel-input > div > div {
+  vertical-align: middle;
+  padding-right: 1em;
+}
+
+.reveal p,
+.reveal .slides section,
+.reveal .slides section > section {
+  line-height: $revealjs-line-height;
+}
+
+// Smaller font size logic
+.reveal {
+  // When smaller is set globally
+  &.smaller {
+    .slides {
+      // We make the all slide font-size smaller by a factor of $presentation-font-smaller
+      section {
+        font-size: #{$presentation-font-smaller}em;
+
+        // avoid applying twice the reduction when using nested section
+        section {
+          font-size: inherit;
+        }
+      }
+
+      // But we don't want headers to change size and they are in em
+      h1 {
+        @include undo-smaller-font-size($revealjs-h1-font-size);
+      }
+      h2 {
+        @include undo-smaller-font-size($revealjs-h2-font-size);
+      }
+      h3 {
+        @include undo-smaller-font-size($revealjs-h3-font-size);
+      }
+    }
+  }
+
+  .slides section {
+    // when  smaller is set on slide
+    &.smaller {
+      font-size: #{$presentation-font-smaller}em;
+
+      // But we don't want headers to change size and they are in em
+      h1 {
+        @include undo-smaller-font-size($revealjs-h1-font-size);
+      }
+      h2 {
+        @include undo-smaller-font-size($revealjs-h2-font-size);
+      }
+      h3 {
+        @include undo-smaller-font-size($revealjs-h3-font-size);
+      }
+    }
+
+    // On callout we want to make the font-size smaller too
+    div.callout {
+      font-size: #{$presentation-font-smaller}em;
+
+      // But we don't want headers to change size and they are in em
+      h1 {
+        @include undo-smaller-font-size($revealjs-h1-font-size);
+      }
+      h2 {
+        @include undo-smaller-font-size($revealjs-h2-font-size);
+      }
+      h3 {
+        @include undo-smaller-font-size($revealjs-h3-font-size);
+      }
+    }
+  }
+}
+
+.reveal .columns > .column > :not(ul, ol) {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.reveal .columns > .column:first-child > :not(ul, ol) {
+  margin-right: 0.5rem;
+  margin-left: 0;
+}
+.reveal .columns > .column:last-child > :not(ul, ol) {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+.reveal .slide-number {
+  color: $linkColorHover;
+  background-color: $body-bg;
+}
+
+.reveal .footer {
+  color: $text-muted;
+
+  a {
+    color: $linkColor;
+  }
+
+  &.has-dark-background {
+    color: quarto-color.scale($dark-bg-text-color, $whiteness: 30%);
+
+    a {
+      color: quarto-color.scale($dark-bg-link-color, $whiteness: 30%);
+    }
+  }
+
+  &.has-light-background {
+    color: quarto-color.scale($light-bg-text-color, $whiteness: 30%);
+
+    a {
+      color: quarto-color.scale($light-bg-link-color, $whiteness: 30%);
+    }
+  }
+}
+
+.reveal .slide-number {
+  color: $text-muted;
+
+  &.has-dark-background {
+    color: quarto-color.scale($dark-bg-text-color, $whiteness: 30%);
+  }
+
+  &.has-light-background {
+    color: quarto-color.scale($light-bg-text-color, $whiteness: 30%);
+  }
+}
+
+// handle caption for figures
+.reveal .slide {
+  figure > figcaption,
+  img.stretch + p.caption,
+  img.r-stretch + p.caption {
+    font-size: #{$presentation-font-smaller}em;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  $arrow-spacing: 0.2em;
+  $control-arrow-spacing: 1.4em;
+
+  .reveal .controls[data-controls-layout="edges"] .navigate-left {
+    left: $arrow-spacing;
+  }
+
+  .reveal .controls[data-controls-layout="edges"] .navigate-right {
+    right: $arrow-spacing;
+  }
+
+  .reveal .controls[data-controls-layout="edges"] .navigate-up {
+    top: $arrow-spacing * 2;
+  }
+
+  .reveal .controls[data-controls-layout="edges"] .navigate-down {
+    bottom: $arrow-spacing - $control-arrow-spacing + 3.5em;
+  }
+}
+
+.tippy-box[data-theme~="light-border"] {
+  background-color: $backgroundColor;
+  color: $mainColor;
+  border-radius: $border-radius;
+  border: solid $border-width $border-color;
+  font-size: 0.6em;
+}
+
+.tippy-box[data-theme~="light-border"] .tippy-arrow {
+  color: $border-color;
+}
+
+.tippy-box[data-placement^="bottom"] > .tippy-content {
+  padding: 7px 10px;
+  z-index: 1;
+}
+
+.reveal .panel-tabset [role="tab"] {
+  padding: 0.25em 0.7em;
+}
+
+.reveal .slide-menu-button .fa-bars::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#{colorToRGB($linkColor)}" class="bi bi-list" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>');
+}
+
+.reveal .slide-chalkboard-buttons .fa-easel2::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#{colorToRGB($linkColor)}" class="bi bi-easel2" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0a.5.5 0 0 1 .447.276L8.81 1h4.69A1.5 1.5 0 0 1 15 2.5V11h.5a.5.5 0 0 1 0 1h-2.86l.845 3.379a.5.5 0 0 1-.97.242L12.11 14H3.89l-.405 1.621a.5.5 0 0 1-.97-.242L3.36 12H.5a.5.5 0 0 1 0-1H1V2.5A1.5 1.5 0 0 1 2.5 1h4.691l.362-.724A.5.5 0 0 1 8 0ZM2 11h12V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5V11Zm9.61 1H4.39l-.25 1h7.72l-.25-1Z"/></svg>');
+}
+
+.reveal .slide-chalkboard-buttons .fa-brush::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#{colorToRGB($linkColor)}" class="bi bi-brush" viewBox="0 0 16 16"><path d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.067 6.067 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.118 8.118 0 0 1-3.078.132 3.659 3.659 0 0 1-.562-.135 1.382 1.382 0 0 1-.466-.247.714.714 0 0 1-.204-.288.622.622 0 0 1 .004-.443c.095-.245.316-.38.461-.452.394-.197.625-.453.867-.826.095-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.201-.925 1.746-.896.126.007.243.025.348.048.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.176-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04zM4.705 11.912a1.23 1.23 0 0 0-.419-.1c-.246-.013-.573.05-.879.479-.197.275-.355.532-.5.777l-.105.177c-.106.181-.213.362-.32.528a3.39 3.39 0 0 1-.76.861c.69.112 1.736.111 2.657-.12.559-.139.843-.569.993-1.06a3.122 3.122 0 0 0 .126-.75l-.793-.792zm1.44.026c.12-.04.277-.1.458-.183a5.068 5.068 0 0 0 1.535-1.1c1.9-1.996 4.412-5.57 6.052-8.631-2.59 1.927-5.566 4.66-7.302 6.792-.442.543-.795 1.243-1.042 1.826-.121.288-.214.54-.275.72v.001l.575.575zm-4.973 3.04.007-.005a.031.031 0 0 1-.007.004zm3.582-3.043.002.001h-.002z"/></svg>');
+}
+
+// This is a sentinel value that renderers can use to determine
+// whether the theme is dark or light
+@if (
+  quarto-color.blackness($backgroundColor) > $code-block-theme-dark-threshhold
+) {
+  /*! dark */
+  .reveal div.callout.callout-style-default .callout-title {
+    color: #222;
+  }
+} @else {
+  /*! light */
+}
+
+/* override theme.scss style for the default styles
+ 
+  Note the need for both the case sensitive flag and the
+  case-oblivious selectors. This is a workaround for what's
+  apparently a Chrome and Safari bug:
+
+  https://github.com/quarto-dev/quarto-cli/issues/1902#issuecomment-1219783059
+ */
+
+.reveal ol[type="a"] {
+  list-style-type: lower-alpha;
+}
+
+.reveal ol[type="a" s] {
+  list-style-type: lower-alpha;
+}
+
+.reveal ol[type="A" s] {
+  list-style-type: upper-alpha;
+}
+
+.reveal ol[type="i"] {
+  list-style-type: lower-roman;
+}
+
+.reveal ol[type="i" s] {
+  list-style-type: lower-roman;
+}
+
+.reveal ol[type="I" s] {
+  list-style-type: upper-roman;
+}
+
+.reveal ol[type="1"] {
+  list-style-type: decimal;
+}
+
+// https://github.com/quarto-dev/quarto-cli/issues/2834
+// temporary workaround while we come up with a pure CSS solution
+
+.reveal ul.task-list {
+  list-style: none;
+}
+.reveal ul.task-list li input[type="checkbox"] {
+  width: 2em;
+  height: 2em;
+  margin: 0 1em 0.5em -1.6em;
+  vertical-align: middle;
+}
+
+// https://github.com/quarto-dev/quarto-cli/issues/3380
+
+div.cell-output-display div.pagedtable-wrapper table.table {
+  font-size: 0.6em;
+}
+
+.reveal .code-annotation-container-hidden {
+  display: none;
+}
+
+.reveal code.sourceCode button.code-annotation-anchor,
+.reveal code.sourceCode .code-annotation-anchor {
+  font-family: $font-family-monospace;
+  color: var(--quarto-hl-co-color);
+  border: solid var(--quarto-hl-co-color) 1px;
+  border-radius: 50%;
+  font-size: 0.7em;
+  line-height: 1.2em;
+  margin-top: 2px;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+}
+
+.reveal code.sourceCode button.code-annotation-anchor {
+  cursor: pointer;
+}
+
+.reveal code.sourceCode a.code-annotation-anchor {
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  cursor: default;
+  height: 1.2em;
+  width: 1.2em;
+}
+
+.reveal code.sourceCode.fragment a.code-annotation-anchor {
+  left: auto;
+}
+
+.reveal #code-annotation-line-highlight-gutter {
+  width: 100%;
+  border-top: solid var(--quarto-hl-co-color) 1px;
+  border-bottom: solid var(--quarto-hl-co-color) 1px;
+  z-index: 2;
+}
+
+.reveal #code-annotation-line-highlight {
+  margin-left: -8em;
+  width: calc(100% + 4em);
+  border-top: solid var(--quarto-hl-co-color) 1px;
+  border-bottom: solid var(--quarto-hl-co-color) 1px;
+  z-index: 2;
+  margin-bottom: -2px;
+}
+
+.reveal code.sourceCode .code-annotation-anchor.code-annotation-active {
+  background-color: var(--quarto-hl-normal-color, #aaaaaa);
+  border: solid var(--quarto-hl-normal-color, #aaaaaa) 1px;
+  color: rgb(red($code-block-bg), green($code-block-bg), blue($code-block-bg));
+  font-weight: bolder;
+}
+
+.reveal pre.code-annotation-code {
+  padding-top: 0;
+  padding-bottom: 0;
+  code {
+    z-index: 3;
+    padding-left: 0px;
+  }
+}
+
+.reveal dl.code-annotation-container-grid {
+  margin-left: 0.1em;
+  dt {
+    margin-top: 0.65rem;
+    font-family: $font-family-monospace;
+    border: solid $body-color 1px;
+    border-radius: 50%;
+    height: 1.3em;
+    width: 1.3em;
+    line-height: 1.3em;
+    font-size: 0.5em;
+    text-align: center;
+    vertical-align: middle;
+
+    text-decoration: none;
+  }
+
+  dd {
+    margin-left: 0.25em;
+  }
+}
+
+/*
+
+  https://github.com/quarto-dev/quarto-cli/issues/4283
+
+  The trick itself is from here:
+
+  https://stackoverflow.com/questions/8720931/can-css-detect-the-number-of-children-an-element-has
+
+*/
+
+.reveal .scrollable ol li:first-child:nth-last-child(n + 10),
+.reveal .scrollable ol li:first-child:nth-last-child(n + 10) ~ li {
+  margin-left: 1em;
+}
+
+/* kbd rules */
+
+kbd {
+  font-family: $font-family-monospace;
+  font-size: $kbd-font-size;
+  color: $kbd-color;
+  @include shift_to_dark(
+    "background-color",
+    shift-color($kbd-bg, 70%),
+    $kbd-bg
+  );
+  border: 1px solid;
+  border-color: $code-block-border-color;
+  border-radius: 5px;
+  padding: $kbd-padding-y $kbd-padding-x;
+}
+
+:root {
+  --r-inline-code-font: #{$font-family-monospace-inline};
+  --r-block-code-font: #{$font-family-monospace-block};
+  --r-inline-code-font-size: #{$revealjs-code-inline-font-size};
+  --r-block-code-font-size: #{$revealjs-code-block-font-size};
+}
+
+// _brand.yml rules
+
+.reveal a {
+  font-weight: $link-weight;
+  background-color: $link-color-bg;
+  text-decoration: $link-decoration;
+}
+
+/* Callout styles */
+
+.reveal div.callout {
+  margin-top: $callout-margin-top;
+  margin-bottom: $callout-margin-bottom;
+  border-radius: $border-radius;
+  overflow-wrap: break-word;
+
+  // Rules for both styles
+  &.callout-style-simple,
+  &.callout-style-default {
+    border-left: $callout-border-width solid #acacac;
+    border-right: solid 1px $table-border-color;
+    border-top: solid 1px $table-border-color;
+    border-bottom: solid 1px $table-border-color;
+
+    div {
+      &.callout-body,
+      &.callout-title {
+        // Font size is inherited from the parent div.callout
+        // which is scaled down like .smaller
+        font-size: inherit;
+        border-bottom: none;
+        font-weight: 600;
+      }
+
+      &.callout-title {
+        p {
+          margin-top: 0.5em;
+          margin-bottom: 0.5em;
+        }
+      }
+
+      &.callout-title {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .callout-icon::before {
+      height: 1.25em;
+      width: 1.25em;
+      background-size: 1.25em 1.25em;
+    }
+
+    &.callout-titled {
+      .callout-body {
+        > .callout-content {
+          > :last-child {
+            margin-bottom: var(--r-block-margin);
+          }
+          > :last-child:not(div.sourceCode) {
+            padding-bottom: 0.5rem;
+            margin-bottom: 0;
+          }
+        }
+      }
+      .callout-icon::before {
+        margin-top: 0.25em;
+        padding-right: 0.25em;
+      }
+    }
+
+    &.no-icon::before {
+      display: none !important;
+    }
+  }
+
+  // Apply only to simple callout style which could have
+  // - a title or not
+  // - an icon or not
+  &.callout-style-simple {
+    padding: 0em 0.5em;
+    display: flex;
+
+    &.callout-titled {
+      .callout-body {
+        margin-top: 0.2em;
+      }
+      &:not(.no-icon) {
+        .callout-content {
+          padding-left: 1.6em;
+        }
+      }
+      .callout-content {
+        p {
+          margin-top: 0;
+        }
+      }
+    }
+
+    &:not(.callout-titled) {
+      .callout-body {
+        display: flex;
+      }
+      .callout-icon::before {
+        margin-top: var(--r-block-margin);
+        padding-right: 0.5em;
+      }
+      .callout-body {
+        > .callout-content {
+          // Margin needs to be added when last child is div.sourceCode
+          // Other code cell border is mixed with callout border
+          > div.sourceCode:last-child {
+            margin-bottom: 1rem;
+          }
+          > :first-child {
+            margin-top: var(--r-block-margin);
+          }
+        }
+      }
+    }
+
+    .callout-icon::before {
+      display: inline-block;
+      content: "";
+      background-repeat: no-repeat;
+    }
+
+    div {
+      &.callout-title {
+        opacity: 75%;
+      }
+      &.callout-body {
+        font-weight: 400;
+      }
+    }
+  }
+
+  // Apply only to default callout style which could have
+  // - a title (can't have no title)
+  // - an icon or not
+  &.callout-style-default {
+    &.callout-titled {
+      .callout-content {
+        p {
+          margin-top: 0.7em;
+        }
+      }
+    }
+
+    .callout-icon::before {
+      display: inline-block;
+      content: "";
+      background-repeat: no-repeat;
+    }
+
+    div {
+      &.callout-body {
+        font-weight: 400;
+      }
+      &.callout-title {
+        opacity: 85%;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+      }
+      &.callout-content {
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+      }
+    }
+  }
+
+  // FIXME: There is no body-container in revealjs so remove but before find what it was suppose to do
+  .callout-body-container {
+    flex-grow: 1;
+  }
+}
+
+/* Callout Types */
+
+// Generate per callout type css to customize their appearance
+// Define the callouts for which we should define styles
+$callouts: (
+  // NOTE
+  "note":
+    (
+      "color": $callout-color-note,
+      "icon":
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>',
+    ),
+  // TIP
+  "tip":
+    (
+      "color": $callout-color-tip,
+      "icon":
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb" viewBox="0 0 16 16"><path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1z"/></svg>',
+    ),
+  // WARNING
+  "warning":
+    (
+      "color": $callout-color-warning,
+      "icon":
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/><path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z"/></svg>',
+    ),
+  // CAUTION
+  "caution":
+    (
+      "color": $callout-color-caution,
+      "icon":
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cone-striped" viewBox="0 0 16 16"><path d="M9.97 4.88l.953 3.811C10.158 8.878 9.14 9 8 9c-1.14 0-2.159-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12zm-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.274 3.9C6.8 3.965 7.382 4 8 4c.618 0 1.2-.036 1.725-.098zm4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257 2.391.598z"/></svg>',
+    ),
+  // IMPORTANT
+  "important":
+    (
+      "color": $callout-color-important,
+      "icon":
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/></svg>',
+    )
+);
+
+@each $name, $info in $callouts {
+  $shifted-color: #{shift-color(
+      quarto-map.get($info, "color"),
+      $callout-icon-scale
+    )};
+  $shifted-color-svg: str-replace($shifted-color, "#", "%23");
+
+  .reveal div.callout {
+    &.callout-#{$name} {
+      border-left-color: shift-color(
+        quarto-map.get($info, "color"),
+        $callout-border-scale
+      );
+      &.callout-style-default {
+        .callout-title {
+          @include shift_to_dark(
+            "background-color",
+            shift-color(quarto-map.get($info, "color"), 70%),
+            shift-color(quarto-map.get($info, "color"), -90%)
+          );
+        }
+      }
+      .callout-icon::before {
+        background-image: #{"url('data:image/svg+xml," +
+          str-replace(
+            quarto-map.get($info, "icon"),
+            'fill="currentColor"',
+            'style="fill: #{$shifted-color-svg}"'
+          ) +
+          "');"};
+      }
+    }
+  }
+}
+
+
+// quarto-scss-analysis-annotation { "origin": "'rules' section from user-defined SCSS" }
+
+$presentation-author-block-padding-left: if(
+  $presentation-title-slide-text-align != left,
+  0.5em,
+  0
+);
+$presentation-author-block-padding-right: if(
+  $presentation-title-slide-text-align != right,
+  0.5em,
+  0
+);
+
+.reveal {
+  .quarto-title-block {
+    .quarto-title-authors {
+      display: flex;
+      justify-content: $presentation-title-slide-text-align;
+
+      .quarto-title-author {
+        padding-left: $presentation-author-block-padding-left;
+        padding-right: $presentation-author-block-padding-right;
+
+        a,
+        a:hover,
+        a:visited,
+        a:active {
+          color: inherit;
+          text-decoration: none;
+        }
+
+        .quarto-title-author-name {
+          margin-bottom: 0.1rem;
+        }
+
+        .quarto-title-author-email {
+          margin-top: 0px;
+          margin-bottom: 0.4em;
+          font-size: 0.6em;
+        }
+
+        .quarto-title-author-orcid {
+          img {
+            margin-bottom: 4px;
+          }
+        }
+
+        .quarto-title-affiliation {
+          font-size: 0.7em;
+          margin-top: 0px;
+          margin-bottom: 8px;
+        }
+
+        .quarto-title-affiliation:first {
+          margin-top: 12px;
+        }
+      }
+    }
+  }
+}
+
+
+
+// === TITELSEITE ========= //
+.title {
+
+  font-size: 65px;
+  font-weight: bold;
+  color: #185191 !important;
+  margin-top:  150px;
+  margin-left: 220px;
+}
+
+.subtitle {
+  color: #07A1E2 !important;
+  font-size: 45px;
+  margin-left: 220px;
+  font-weight: bold;
+}
+
+.author {
+  color: #185191 !important;
+  font-size: 35px;
+  margin-top:  50px;
+  margin-left: 220px;;
+}
+
+.institute {
+  color: #185191 !important;
+  font-size: 25px;
+}
+
+.date {
+  color: #07A1E2 !important;
+  font-size: 20px;
+  margin-left: 220px;
+}
+
+// -- eigene Titelseite -------//
+//  titel
+.HSNR-title h1{
+  color: #185191 !important;
+  margin-top:  150px;
+  margin-left: 220px;
+}
+
+//  titel
+.HSNR-title h2{
+  color: #185191 !important;
+  margin-top:  150px;
+  margin-left: 220px;
+}
+
+//  untertitel
+.HSNR-title h3{
+  color: #07A1E2 !important;
+  font-size: 35px;
+  margin-left: 220px;
+}
+
+
+// autor
+.HSNR-title h4{
+  color: #185191 !important;
+  font-size: 30px;
+  margin-top:  50px;
+  margin-left: 220px;
+}
+
+//  hochschule
+.HSNR-title h5{
+  color: #185191 !important;
+  font-size: 22px;
+  margin-left: 220px;
+}
+
+// datum
+.HSNR-title h6{
+  color: #07A1E2 !important;
+  font-size: 18px;
+  margin-left: 220px;
+}
+
+//======================================
+
+
+
+// Slide numbers to the bottom-left
+.slide-number, .reveal.has-logo .slide-number {
+  bottom: 14px !important;
+  left: 50px !important;
+  top: unset !important;
+  color: #777777 !important;
+}
+
+
+
+.shrink{
+transform:scale(0.5);
+}
+
+.float-left img {
+  float: left;
+  margin-right: 20px;
+}
+
+.float-left figcaption{
+  text-align: left;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+.float-right img{
+  float: right;
+  margin-left: 20px;
+}
+
+.float-right figcaption{
+  text-align: right;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+/* HSNR-Farben */
+.HSNRblue1 {
+  color: #185191 !important;
+}
+
+.HSNRblue2 {
+  color: #07A1E2 !important;
+}
+
+/* HSNR-Farben */
+.bg-HSNRblue1 {
+  background-color: #185191 !important;
+}
+
+.bg-HSNRblue2 {
+  background-color: #07A1E2 !important;
+}
+
+
+
+
+/* Text-Schatten */
+h2 {
+  text-shadow: 2px 2px #CCCCCC !important;
+}
+
+.shadow-hsnr1 {
+  text-shadow: 2px 2px #185191 !important;
+}
+.shadow-hsnr2 {
+  text-shadow: 2px 2px #07A1E2 !important;
+}
+.shadow-black {
+  text-shadow: 2px 2px black !important;
+}
+.shadow-silver {
+  text-shadow: 2px 2px #CCCCCC !important;
+}
+.shadow-grau {
+  text-shadow: 2px 2px #AAAAAA !important;
+}
+
+
+/* Bilder-Schatten */
+.shadow-box {
+  border:2px solid #fff;
+  -moz-box-shadow: 10px 10px 5px #ccc;
+  -webkit-box-shadow: 10px 10px 5px #ccc;
+  box-shadow: 10px 10px 5px #ccc;
+  -moz-border-radius:25px;
+  -webkit-border-radius:25px;
+  border-radius:25px;
+}
+.shadow-img img {
+  border:2px solid #fff;
+  -moz-box-shadow: 10px 10px 5px #ccc;
+  -webkit-box-shadow: 10px 10px 5px #ccc;
+  box-shadow: 10px 10px 5px #ccc;
+  -moz-border-radius:25px;
+  -webkit-border-radius:25px;
+  border-radius:25px;
+}
+
+
+
+
+/* Zwischentitel in HSNR-Farben */
+.zwischentitel1 {
+  background-color: #185191 !important;
+  color: white;
+  text-align: center;
+  min-height: 0 !important;
+}
+
+.zwischentitel2 {
+  background-color: #07A1E2 !important;
+  color: white;
+  text-align: center;
+}
+
+
+
+
+/* Bild- und Tabellencaptions zentrieren */
+.caption {
+  text-align: center;
+}
+
+figcaption {
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+
+
+/* eigene Kasten */
+.blackbox {
+  border: 1px solid #AAAAAA;
+  border-radius: 4px;
+  background-color: #EEEEEE;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.blankbox {
+  border: 1px solid #AAAAAA;
+  border-radius: 4px;
+  padding-left: 10px;
+  padding-right: 10px;
+  
+}
+
+
+.instructions {
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+}
+
+.instructions pre code {
+  background-color: #F4F4F4;
+}
+
+
+/* Box für R-Ausgabe */
+.cell-output-stdout pre code {
+  background-color: #F4F4F4;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+  margin-top: 4px;
+  margin-bottom: 20px;
+  
+}
+
+.cell-output-error pre code {
+  background-color: #F4F4F4;
+  border: 1px solid red;
+  border-radius: 4px;  
+  margin-top: 4px;
+  margin-bottom: 20px;
+  
+}
+
+
+
+
+
+
+
+/* Zitat-Kasten als CSS-Tabelle */
+.zitabelle {
+  display: table;
+  border-radius: 2px;  
+  color: white;
+  background-color: #185191;
+  text-align: center;
+  border-radius:25px;
+  padding: 0px;  
+}
+
+.zitabeller {
+  display: table-row;
+  padding: 0px;
+}
+
+
+.zitabellec {
+  display: table-cell;
+  vertical-align: middle !important;
+  padding-right: 24px;
+  padding-left: 24px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  
+}
+
+.zitabellec img {
+  border:2px solid #fff;
+  -moz-box-shadow: 10px 10px 5px #ccc;
+  -webkit-box-shadow: 10px 10px 5px #ccc;
+  box-shadow: 10px 10px 5px #ccc;
+  -moz-border-radius:25px;
+  -webkit-border-radius:25px;
+  border-radius:25px;
+}
+
+
+
+/* Letzte Folie / Visitenkarte  */
+.vielendank {
+  background-color: #ffffff;
+  font-size: 50px;
+  color: #185191;
+  border-radius: 25px;
+  padding-left: 15px;
+  padding-right: 1px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.visitenkarte {
+  border-width: thin;
+  background-color: #ffffff;
+  font-size: 40px;
+  color: #185191;
+  border-radius: 25px;
+  padding-left: 15px;
+  padding-right: 1px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.visitenkarte2 {
+  background-color: #C8D4DC;
+  font-size: 40px;
+  color: #185191;
+  border: ridge #185191;
+  border-width: 1px;
+  border-radius: 25px;
+  padding-left: 15px;
+  padding-right: 1px;
+  padding-top: 15px;
+  padding-bottom: 0px;
+}
+
+.literaturliste {
+  background-color: #ffffff;
+  font-size: 22px;
+  border-radius: 25px;
+  padding-left: 15px;
+  padding-right: 1px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+
+// Text center und rechts
+.tc  { text-align: center;}
+.tr  { text-align: right; }
+
+/* Mehr Farben und Textgrößen */
+/* -------------------------- */
+.gray { color: #777777; }
+.silver { color: #999999; }
+.light-silver { color: #AAAAAA; }
+.moon-gray { color: #CCCCCC; }
+.light-gray { color: #EEEEEE; }
+.near-white { color: #F4F4F4; }
+.white { color: #FFFFFF; }
+.dark-red { color: #E7040F; }
+.red { color: #FF4136; }
+.light-red { color: #FF725C; }
+.orange { color: #FF6300; }
+.gold { color: #FFB700; }
+.yellow { color: #FFD700; }
+.light-yellow { color: #FBF1A9; }
+.light-purple { color: #A463F2; }
+.dark-pink { color: #D5008F; }
+.hot-pink { color: #FF41B4; }
+.pink { color: #FF80CC; }
+.light-pink { color: #FFA3D7; }
+.dark-green { color: #137752; }
+.green { color: #19A974; }
+.light-green { color: #9EEBCF; }
+.blue { color: #357EDD; }
+.light-blue { color: #96CCFF; }
+.lightest-blue { color: #CDECFF; }
+.washed-blue { color: #F6FFFE; }
+.washed-green { color: #E8FDF5; }
+.washed-yellow { color: #FFFCEB; }
+.washed-red { color: #FFDFDF; }
+.black { color: #000000; }
+.near-black { color: #111111; }
+.dark-gray { color: #333333; }
+.mid-gray { color: #555555; }
+.gray { color: #777777; }
+.dark-red { color: #E7040F; }
+.red { color: #FF4136; }
+.purple { color: #5E2CA5; }
+.light-purple { color: #A463F2; }
+.dark-pink { color: #D5008F; }
+.dark-green { color: #137752; }
+.navy { color: #001B44; }
+.dark-blue { color: #00449E; }
+.blue { color: #357EDD; }
+
+.bg-gray { background-color: #777777; }
+.bg-silver { background-color: #999999; }
+.bg-light-silver { background-color: #AAAAAA; }
+.bg-moon-gray { background-color: #CCCCCC; }
+.bg-light-gray { background-color: #EEEEEE; }
+.bg-near-white { background-color: #F4F4F4; }
+.bg-white { background-color: #FFFFFF; }
+.bg-dark-red { background-color: #E7040F; }
+.bg-red { background-color: #FF4136; }
+.bg-light-red { background-color: #FF725C; }
+.bg-orange { background-color: #FF6300; }
+.bg-gold { background-color: #FFB700; }
+.bg-yellow { background-color: #FFD700; }
+.bg-light-yellow { background-color: #FBF1A9; }
+.bg-light-purple { background-color: #A463F2; }
+.bg-dark-pink { background-color: #D5008F; }
+.bg-hot-pink { background-color: #FF41B4; }
+.bg-pink { background-color: #FF80CC; }
+.bg-light-pink { background-color: #FFA3D7; }
+.bg-dark-green { background-color: #137752; }
+.bg-green { background-color: #19A974; }
+.bg-light-green { background-color: #9EEBCF; }
+.bg-blue { background-color: #357EDD; }
+.bg-light-blue { background-color: #96CCFF; }
+.bg-lightest-blue { background-color: #CDECFF; }
+.bg-washed-blue { background-color: #F6FFFE; }
+.bg-washed-green { background-color: #E8FDF5; }
+.bg-washed-yellow { background-color: #FFFCEB; }
+.bg-washed-red { background-color: #FFDFDF; }
+.bg-black { background-color: #000000; }
+.bg-near-black { background-color: #111111; }
+.bg-dark-gray { background-color: #333333; }
+.bg-mid-gray { background-color: #555555; }
+.bg-gray { background-color: #777777; }
+.bg-dark-red { background-color: #E7040F; }
+.bg-red { background-color: #FF4136; }
+.bg-purple { background-color: #5E2CA5; }
+.bg-light-purple { background-color: #A463F2; }
+.bg-dark-pink { background-color: #D5008F; }
+.bg-dark-green { background-color: #137752; }
+.bg-navy { background-color: #001B44; }
+.bg-dark-blue { background-color: #00449E; }
+.bg-blue { background-color: #357EDD; }
+
+/* Tango-Farben  */
+.Tbluedark { color: #204A87; }
+.Tblue { color: #3465A4; }	
+.Tbluelight { color: #729FCF; }
+.Tbrown { color: #C17D11; }
+.Tbrowndark { color: #8F5902; }
+.Tbrownlight { color: #E9B96E; }	
+.Tgray { color: #888A85; }
+.Tgraydark { color: #555753; }	
+.Tgraylight { color: #BABDB6; }	
+.Tgraylight2 { color: #E4E6E2; }
+.Tgraylight3 { color: #F0F2EE; }
+.Tgreen { color: #73D216; }	
+.Tgreendark { color: #4E9A06; }	
+.Tgreenlight { color: #8AE234; }	
+.Tred { color: #CC0000; }	
+.Treddark { color: #A40000; }
+.Tredlight { color: #EF2929; }	
+.Tlilac { color: #75507B; }	
+.Tlilacdark { color: #5C3566; }	
+.Tlilaclight { color: #AD7FA8; }
+.Tyellow { color: #EDD400; }	
+.Tyellowdark { color: #C4A000; }
+.Tyellowlight { color: #FCE94F; }
+.Torange { color: #F57900; }	
+.Torangedark { color: #CE5C00; }	
+.Torangelight { color: #FCAF3E; }
+
+
+/* Tango-Farben  */
+.bg-Tbluedark { background-color: #204A87; }
+.bg-Tblue { background-color: #3465A4; }	
+.bg-Tbluelight { background-color: #729FCF; }
+.bg-Tbrown { background-color: #C17D11; }
+.bg-Tbrowndark { background-color: #8F5902; }
+.bg-Tbrownlight { background-color: #E9B96E; }	
+.bg-Tgray { background-color: #888A85; }
+.bg-Tgraydark { background-color: #555753; }	
+.bg-Tgraylight { background-color: #BABDB6; }	
+.bg-Tgraylight2 { background-color: #E4E6E2; }
+.bg-Tgraylight3 { background-color: #F0F2EE; }
+.bg-Tgreen { background-color: #73D216; }	
+.bg-Tgreendark { background-color: #4E9A06; }	
+.bg-Tgreenlight { background-color: #8AE234; }	
+.bg-Tred { background-color: #CC0000; }	
+.bg-Treddark { background-color: #A40000; }
+.bg-Tredlight { background-color: #EF2929; }	
+.bg-Tlilac { background-color: #75507B; }	
+.bg-Tlilacdark { background-color: #5C3566; }	
+.bg-Tlilaclight { background-color: #AD7FA8; }
+.bg-Tyellow { background-color: #EDD400; }	
+.bg-Tyellowdark { background-color: #C4A000; }
+.bg-Tyellowlight { background-color: #FCE94F; }
+.bg-Torange { background-color: #F57900; }	
+.bg-Torangedark { background-color: #CE5C00; }	
+.bg-Torangelight { background-color: #FCAF3E; }
+
+
+
+
+
+/* Schriftgröße  */
+
+.size0{  font-size: 0px; }
+.size1{  font-size: 1px; }
+.size2{  font-size: 2px; }
+.size3{  font-size: 3px; }
+.size4{  font-size: 4px; }
+.size5{  font-size: 5px; }
+.size6{  font-size: 6px; }
+.size7{  font-size: 7px; }
+.size8{  font-size: 8px; }
+.size9{  font-size: 9px; }
+.size10{  font-size: 10px; }
+.size11{  font-size: 11px; }
+.size12{  font-size: 12px; }
+.size13{  font-size: 13px; }
+.size14{  font-size: 14px; }
+.size15{  font-size: 15px; }
+.size16{  font-size: 16px; }
+.size17{  font-size: 17px; }
+.size18{  font-size: 18px; }
+.size19{  font-size: 19px; }
+.size20{  font-size: 20px; }
+.size21{  font-size: 21px; }
+.size22{  font-size: 22px; }
+.size23{  font-size: 23px; }
+.size24{  font-size: 24px; }
+.size25{  font-size: 25px; }
+.size26{  font-size: 26px; }
+.size27{  font-size: 27px; }
+.size28{  font-size: 28px; }
+.size29{  font-size: 29px; }
+.size30{  font-size: 30px; }
+.size31{  font-size: 31px; }
+.size32{  font-size: 32px; }
+.size33{  font-size: 33px; }
+.size34{  font-size: 34px; }
+.size35{  font-size: 35px; }
+.size36{  font-size: 36px; }
+.size37{  font-size: 37px; }
+.size38{  font-size: 38px; }
+.size39{  font-size: 39px; }
+.size40{  font-size: 40px; }
+.size41{  font-size: 41px; }
+.size42{  font-size: 42px; }
+.size43{  font-size: 43px; }
+.size44{  font-size: 44px; }
+.size45{  font-size: 45px; }
+.size46{  font-size: 46px; }
+.size47{  font-size: 47px; }
+.size48{  font-size: 48px; }
+.size49{  font-size: 49px; }
+.size50{  font-size: 50px; }
+.size51{  font-size: 51px; }
+.size52{  font-size: 52px; }
+.size53{  font-size: 53px; }
+.size54{  font-size: 54px; }
+.size55{  font-size: 55px; }
+.size56{  font-size: 56px; }
+.size57{  font-size: 57px; }
+.size58{  font-size: 58px; }
+.size59{  font-size: 59px; }
+.size60{  font-size: 60px; }
+.size61{  font-size: 61px; }
+.size62{  font-size: 62px; }
+.size63{  font-size: 63px; }
+.size64{  font-size: 64px; }
+.size65{  font-size: 65px; }
+.size66{  font-size: 66px; }
+.size67{  font-size: 67px; }
+.size68{  font-size: 68px; }
+.size69{  font-size: 69px; }
+.size70{  font-size: 70px; }
+.size71{  font-size: 71px; }
+.size72{  font-size: 72px; }
+.size73{  font-size: 73px; }
+.size74{  font-size: 74px; }
+.size75{  font-size: 75px; }
+.size76{  font-size: 76px; }
+.size77{  font-size: 77px; }
+.size78{  font-size: 78px; }
+.size79{  font-size: 79px; }
+.size80{  font-size: 80px; }
+.size81{  font-size: 81px; }
+.size82{  font-size: 82px; }
+.size83{  font-size: 83px; }
+.size84{  font-size: 84px; }
+.size85{  font-size: 85px; }
+.size86{  font-size: 86px; }
+.size87{  font-size: 87px; }
+.size88{  font-size: 88px; }
+.size89{  font-size: 89px; }
+.size90{  font-size: 90px; }
+.size91{  font-size: 91px; }
+.size92{  font-size: 92px; }
+.size93{  font-size: 93px; }
+.size94{  font-size: 94px; }
+.size95{  font-size: 95px; }
+.size96{  font-size: 96px; }
+.size97{  font-size: 97px; }
+.size98{  font-size: 98px; }
+.size99{  font-size: 99px; }
+.size100{  font-size: 100px; }
+.size101{  font-size: 101px; }
+.size102{  font-size: 102px; }
+.size103{  font-size: 103px; }
+.size104{  font-size: 104px; }
+.size105{  font-size: 105px; }
+.size106{  font-size: 106px; }
+.size107{  font-size: 107px; }
+.size108{  font-size: 108px; }
+.size109{  font-size: 109px; }
+.size110{  font-size: 110px; }
+.size111{  font-size: 111px; }
+.size112{  font-size: 112px; }
+.size113{  font-size: 113px; }
+.size114{  font-size: 114px; }
+.size115{  font-size: 115px; }
+.size116{  font-size: 116px; }
+.size117{  font-size: 117px; }
+.size118{  font-size: 118px; }
+.size119{  font-size: 119px; }
+.size120{  font-size: 120px; }
+.size121{  font-size: 121px; }
+.size122{  font-size: 122px; }
+.size123{  font-size: 123px; }
+.size124{  font-size: 124px; }
+.size125{  font-size: 125px; }
+.size126{  font-size: 126px; }
+.size127{  font-size: 127px; }
+.size128{  font-size: 128px; }
+.size129{  font-size: 129px; }
+.size130{  font-size: 130px; }
+.size131{  font-size: 131px; }
+.size132{  font-size: 132px; }
+.size133{  font-size: 133px; }
+.size134{  font-size: 134px; }
+.size135{  font-size: 135px; }
+.size136{  font-size: 136px; }
+.size137{  font-size: 137px; }
+.size138{  font-size: 138px; }
+.size139{  font-size: 139px; }
+.size140{  font-size: 140px; }
+.size141{  font-size: 141px; }
+.size142{  font-size: 142px; }
+.size143{  font-size: 143px; }
+.size144{  font-size: 144px; }
+.size145{  font-size: 145px; }
+.size146{  font-size: 146px; }
+.size147{  font-size: 147px; }
+.size148{  font-size: 148px; }
+.size149{  font-size: 149px; }
+.size150{  font-size: 150px; }
+
+
+.figw10{  width: 10px; }
+.figw11{  width: 11px; }
+.figw12{  width: 12px; }
+.figw13{  width: 13px; }
+.figw14{  width: 14px; }
+.figw15{  width: 15px; }
+.figw16{  width: 16px; }
+.figw17{  width: 17px; }
+.figw18{  width: 18px; }
+.figw19{  width: 19px; }
+.figw20{  width: 20px; }
+.figw21{  width: 21px; }
+.figw22{  width: 22px; }
+.figw23{  width: 23px; }
+.figw24{  width: 24px; }
+.figw25{  width: 25px; }
+.figw26{  width: 26px; }
+.figw27{  width: 27px; }
+.figw28{  width: 28px; }
+.figw29{  width: 29px; }
+.figw30{  width: 30px; }
+.figw31{  width: 31px; }
+.figw32{  width: 32px; }
+.figw33{  width: 33px; }
+.figw34{  width: 34px; }
+.figw35{  width: 35px; }
+.figw36{  width: 36px; }
+.figw37{  width: 37px; }
+.figw38{  width: 38px; }
+.figw39{  width: 39px; }
+.figw40{  width: 40px; }
+.figw41{  width: 41px; }
+.figw42{  width: 42px; }
+.figw43{  width: 43px; }
+.figw44{  width: 44px; }
+.figw45{  width: 45px; }
+.figw46{  width: 46px; }
+.figw47{  width: 47px; }
+.figw48{  width: 48px; }
+.figw49{  width: 49px; }
+.figw50{  width: 50px; }
+.figw51{  width: 51px; }
+.figw52{  width: 52px; }
+.figw53{  width: 53px; }
+.figw54{  width: 54px; }
+.figw55{  width: 55px; }
+.figw56{  width: 56px; }
+.figw57{  width: 57px; }
+.figw58{  width: 58px; }
+.figw59{  width: 59px; }
+.figw60{  width: 60px; }
+.figw61{  width: 61px; }
+.figw62{  width: 62px; }
+.figw63{  width: 63px; }
+.figw64{  width: 64px; }
+.figw65{  width: 65px; }
+.figw66{  width: 66px; }
+.figw67{  width: 67px; }
+.figw68{  width: 68px; }
+.figw69{  width: 69px; }
+.figw70{  width: 70px; }
+.figw71{  width: 71px; }
+.figw72{  width: 72px; }
+.figw73{  width: 73px; }
+.figw74{  width: 74px; }
+.figw75{  width: 75px; }
+.figw76{  width: 76px; }
+.figw77{  width: 77px; }
+.figw78{  width: 78px; }
+.figw79{  width: 79px; }
+.figw80{  width: 80px; }
+.figw81{  width: 81px; }
+.figw82{  width: 82px; }
+.figw83{  width: 83px; }
+.figw84{  width: 84px; }
+.figw85{  width: 85px; }
+.figw86{  width: 86px; }
+.figw87{  width: 87px; }
+.figw88{  width: 88px; }
+.figw89{  width: 89px; }
+.figw90{  width: 90px; }
+.figw91{  width: 91px; }
+.figw92{  width: 92px; }
+.figw93{  width: 93px; }
+.figw94{  width: 94px; }
+.figw95{  width: 95px; }
+.figw96{  width: 96px; }
+.figw97{  width: 97px; }
+.figw98{  width: 98px; }
+.figw99{  width: 99px; }
+.figw100{  width: 100px; }
+.figw101{  width: 101px; }
+.figw102{  width: 102px; }
+.figw103{  width: 103px; }
+.figw104{  width: 104px; }
+.figw105{  width: 105px; }
+.figw106{  width: 106px; }
+.figw107{  width: 107px; }
+.figw108{  width: 108px; }
+.figw109{  width: 109px; }
+.figw110{  width: 110px; }
+.figw111{  width: 111px; }
+.figw112{  width: 112px; }
+.figw113{  width: 113px; }
+.figw114{  width: 114px; }
+.figw115{  width: 115px; }
+.figw116{  width: 116px; }
+.figw117{  width: 117px; }
+.figw118{  width: 118px; }
+.figw119{  width: 119px; }
+.figw120{  width: 120px; }
+.figw121{  width: 121px; }
+.figw122{  width: 122px; }
+.figw123{  width: 123px; }
+.figw124{  width: 124px; }
+.figw125{  width: 125px; }
+.figw126{  width: 126px; }
+.figw127{  width: 127px; }
+.figw128{  width: 128px; }
+.figw129{  width: 129px; }
+.figw130{  width: 130px; }
+.figw131{  width: 131px; }
+.figw132{  width: 132px; }
+.figw133{  width: 133px; }
+.figw134{  width: 134px; }
+.figw135{  width: 135px; }
+.figw136{  width: 136px; }
+.figw137{  width: 137px; }
+.figw138{  width: 138px; }
+.figw139{  width: 139px; }
+.figw140{  width: 140px; }
+.figw141{  width: 141px; }
+.figw142{  width: 142px; }
+.figw143{  width: 143px; }
+.figw144{  width: 144px; }
+.figw145{  width: 145px; }
+.figw146{  width: 146px; }
+.figw147{  width: 147px; }
+.figw148{  width: 148px; }
+.figw149{  width: 149px; }
+.figw150{  width: 150px; }
+.figw151{  width: 151px; }
+.figw152{  width: 152px; }
+.figw153{  width: 153px; }
+.figw154{  width: 154px; }
+.figw155{  width: 155px; }
+.figw156{  width: 156px; }
+.figw157{  width: 157px; }
+.figw158{  width: 158px; }
+.figw159{  width: 159px; }
+.figw160{  width: 160px; }
+.figw161{  width: 161px; }
+.figw162{  width: 162px; }
+.figw163{  width: 163px; }
+.figw164{  width: 164px; }
+.figw165{  width: 165px; }
+.figw166{  width: 166px; }
+.figw167{  width: 167px; }
+.figw168{  width: 168px; }
+.figw169{  width: 169px; }
+.figw170{  width: 170px; }
+.figw171{  width: 171px; }
+.figw172{  width: 172px; }
+.figw173{  width: 173px; }
+.figw174{  width: 174px; }
+.figw175{  width: 175px; }
+.figw176{  width: 176px; }
+.figw177{  width: 177px; }
+.figw178{  width: 178px; }
+.figw179{  width: 179px; }
+.figw180{  width: 180px; }
+.figw181{  width: 181px; }
+.figw182{  width: 182px; }
+.figw183{  width: 183px; }
+.figw184{  width: 184px; }
+.figw185{  width: 185px; }
+.figw186{  width: 186px; }
+.figw187{  width: 187px; }
+.figw188{  width: 188px; }
+.figw189{  width: 189px; }
+.figw190{  width: 190px; }
+.figw191{  width: 191px; }
+.figw192{  width: 192px; }
+.figw193{  width: 193px; }
+.figw194{  width: 194px; }
+.figw195{  width: 195px; }
+.figw196{  width: 196px; }
+.figw197{  width: 197px; }
+.figw198{  width: 198px; }
+.figw199{  width: 199px; }
+.figw200{  width: 200px; }
+.figw201{  width: 201px; }
+.figw202{  width: 202px; }
+.figw203{  width: 203px; }
+.figw204{  width: 204px; }
+.figw205{  width: 205px; }
+.figw206{  width: 206px; }
+.figw207{  width: 207px; }
+.figw208{  width: 208px; }
+.figw209{  width: 209px; }
+.figw210{  width: 210px; }
+.figw211{  width: 211px; }
+.figw212{  width: 212px; }
+.figw213{  width: 213px; }
+.figw214{  width: 214px; }
+.figw215{  width: 215px; }
+.figw216{  width: 216px; }
+.figw217{  width: 217px; }
+.figw218{  width: 218px; }
+.figw219{  width: 219px; }
+.figw220{  width: 220px; }
+.figw221{  width: 221px; }
+.figw222{  width: 222px; }
+.figw223{  width: 223px; }
+.figw224{  width: 224px; }
+.figw225{  width: 225px; }
+.figw226{  width: 226px; }
+.figw227{  width: 227px; }
+.figw228{  width: 228px; }
+.figw229{  width: 229px; }
+.figw230{  width: 230px; }
+.figw231{  width: 231px; }
+.figw232{  width: 232px; }
+.figw233{  width: 233px; }
+.figw234{  width: 234px; }
+.figw235{  width: 235px; }
+.figw236{  width: 236px; }
+.figw237{  width: 237px; }
+.figw238{  width: 238px; }
+.figw239{  width: 239px; }
+.figw240{  width: 240px; }
+.figw241{  width: 241px; }
+.figw242{  width: 242px; }
+.figw243{  width: 243px; }
+.figw244{  width: 244px; }
+.figw245{  width: 245px; }
+.figw246{  width: 246px; }
+.figw247{  width: 247px; }
+.figw248{  width: 248px; }
+.figw249{  width: 249px; }
+.figw250{  width: 250px; }
+.figw251{  width: 251px; }
+.figw252{  width: 252px; }
+.figw253{  width: 253px; }
+.figw254{  width: 254px; }
+.figw255{  width: 255px; }
+.figw256{  width: 256px; }
+.figw257{  width: 257px; }
+.figw258{  width: 258px; }
+.figw259{  width: 259px; }
+.figw260{  width: 260px; }
+.figw261{  width: 261px; }
+.figw262{  width: 262px; }
+.figw263{  width: 263px; }
+.figw264{  width: 264px; }
+.figw265{  width: 265px; }
+.figw266{  width: 266px; }
+.figw267{  width: 267px; }
+.figw268{  width: 268px; }
+.figw269{  width: 269px; }
+.figw270{  width: 270px; }
+.figw271{  width: 271px; }
+.figw272{  width: 272px; }
+.figw273{  width: 273px; }
+.figw274{  width: 274px; }
+.figw275{  width: 275px; }
+.figw276{  width: 276px; }
+.figw277{  width: 277px; }
+.figw278{  width: 278px; }
+.figw279{  width: 279px; }
+.figw280{  width: 280px; }
+.figw281{  width: 281px; }
+.figw282{  width: 282px; }
+.figw283{  width: 283px; }
+.figw284{  width: 284px; }
+.figw285{  width: 285px; }
+.figw286{  width: 286px; }
+.figw287{  width: 287px; }
+.figw288{  width: 288px; }
+.figw289{  width: 289px; }
+.figw290{  width: 290px; }
+.figw291{  width: 291px; }
+.figw292{  width: 292px; }
+.figw293{  width: 293px; }
+.figw294{  width: 294px; }
+.figw295{  width: 295px; }
+.figw296{  width: 296px; }
+.figw297{  width: 297px; }
+.figw298{  width: 298px; }
+.figw299{  width: 299px; }
+.figw300{  width: 300px; }
+.figw301{  width: 301px; }
+.figw302{  width: 302px; }
+.figw303{  width: 303px; }
+.figw304{  width: 304px; }
+.figw305{  width: 305px; }
+.figw306{  width: 306px; }
+.figw307{  width: 307px; }
+.figw308{  width: 308px; }
+.figw309{  width: 309px; }
+.figw310{  width: 310px; }
+.figw311{  width: 311px; }
+.figw312{  width: 312px; }
+.figw313{  width: 313px; }
+.figw314{  width: 314px; }
+.figw315{  width: 315px; }
+.figw316{  width: 316px; }
+.figw317{  width: 317px; }
+.figw318{  width: 318px; }
+.figw319{  width: 319px; }
+.figw320{  width: 320px; }
+.figw321{  width: 321px; }
+.figw322{  width: 322px; }
+.figw323{  width: 323px; }
+.figw324{  width: 324px; }
+.figw325{  width: 325px; }
+.figw326{  width: 326px; }
+.figw327{  width: 327px; }
+.figw328{  width: 328px; }
+.figw329{  width: 329px; }
+.figw330{  width: 330px; }
+.figw331{  width: 331px; }
+.figw332{  width: 332px; }
+.figw333{  width: 333px; }
+.figw334{  width: 334px; }
+.figw335{  width: 335px; }
+.figw336{  width: 336px; }
+.figw337{  width: 337px; }
+.figw338{  width: 338px; }
+.figw339{  width: 339px; }
+.figw340{  width: 340px; }
+.figw341{  width: 341px; }
+.figw342{  width: 342px; }
+.figw343{  width: 343px; }
+.figw344{  width: 344px; }
+.figw345{  width: 345px; }
+.figw346{  width: 346px; }
+.figw347{  width: 347px; }
+.figw348{  width: 348px; }
+.figw349{  width: 349px; }
+.figw350{  width: 350px; }
+.figw351{  width: 351px; }
+.figw352{  width: 352px; }
+.figw353{  width: 353px; }
+.figw354{  width: 354px; }
+.figw355{  width: 355px; }
+.figw356{  width: 356px; }
+.figw357{  width: 357px; }
+.figw358{  width: 358px; }
+.figw359{  width: 359px; }
+.figw360{  width: 360px; }
+.figw361{  width: 361px; }
+.figw362{  width: 362px; }
+.figw363{  width: 363px; }
+.figw364{  width: 364px; }
+.figw365{  width: 365px; }
+.figw366{  width: 366px; }
+.figw367{  width: 367px; }
+.figw368{  width: 368px; }
+.figw369{  width: 369px; }
+.figw370{  width: 370px; }
+.figw371{  width: 371px; }
+.figw372{  width: 372px; }
+.figw373{  width: 373px; }
+.figw374{  width: 374px; }
+.figw375{  width: 375px; }
+.figw376{  width: 376px; }
+.figw377{  width: 377px; }
+.figw378{  width: 378px; }
+.figw379{  width: 379px; }
+.figw380{  width: 380px; }
+.figw381{  width: 381px; }
+.figw382{  width: 382px; }
+.figw383{  width: 383px; }
+.figw384{  width: 384px; }
+.figw385{  width: 385px; }
+.figw386{  width: 386px; }
+.figw387{  width: 387px; }
+.figw388{  width: 388px; }
+.figw389{  width: 389px; }
+.figw390{  width: 390px; }
+.figw391{  width: 391px; }
+.figw392{  width: 392px; }
+.figw393{  width: 393px; }
+.figw394{  width: 394px; }
+.figw395{  width: 395px; }
+.figw396{  width: 396px; }
+.figw397{  width: 397px; }
+.figw398{  width: 398px; }
+.figw399{  width: 399px; }
+.figw400{  width: 400px; }
+.figw401{  width: 401px; }
+.figw402{  width: 402px; }
+.figw403{  width: 403px; }
+.figw404{  width: 404px; }
+.figw405{  width: 405px; }
+.figw406{  width: 406px; }
+.figw407{  width: 407px; }
+.figw408{  width: 408px; }
+.figw409{  width: 409px; }
+.figw410{  width: 410px; }
+.figw411{  width: 411px; }
+.figw412{  width: 412px; }
+.figw413{  width: 413px; }
+.figw414{  width: 414px; }
+.figw415{  width: 415px; }
+.figw416{  width: 416px; }
+.figw417{  width: 417px; }
+.figw418{  width: 418px; }
+.figw419{  width: 419px; }
+.figw420{  width: 420px; }
+.figw421{  width: 421px; }
+.figw422{  width: 422px; }
+.figw423{  width: 423px; }
+.figw424{  width: 424px; }
+.figw425{  width: 425px; }
+.figw426{  width: 426px; }
+.figw427{  width: 427px; }
+.figw428{  width: 428px; }
+.figw429{  width: 429px; }
+.figw430{  width: 430px; }
+.figw431{  width: 431px; }
+.figw432{  width: 432px; }
+.figw433{  width: 433px; }
+.figw434{  width: 434px; }
+.figw435{  width: 435px; }
+.figw436{  width: 436px; }
+.figw437{  width: 437px; }
+.figw438{  width: 438px; }
+.figw439{  width: 439px; }
+.figw440{  width: 440px; }
+.figw441{  width: 441px; }
+.figw442{  width: 442px; }
+.figw443{  width: 443px; }
+.figw444{  width: 444px; }
+.figw445{  width: 445px; }
+.figw446{  width: 446px; }
+.figw447{  width: 447px; }
+.figw448{  width: 448px; }
+.figw449{  width: 449px; }
+.figw450{  width: 450px; }
+.figw451{  width: 451px; }
+.figw452{  width: 452px; }
+.figw453{  width: 453px; }
+.figw454{  width: 454px; }
+.figw455{  width: 455px; }
+.figw456{  width: 456px; }
+.figw457{  width: 457px; }
+.figw458{  width: 458px; }
+.figw459{  width: 459px; }
+.figw460{  width: 460px; }
+.figw461{  width: 461px; }
+.figw462{  width: 462px; }
+.figw463{  width: 463px; }
+.figw464{  width: 464px; }
+.figw465{  width: 465px; }
+.figw466{  width: 466px; }
+.figw467{  width: 467px; }
+.figw468{  width: 468px; }
+.figw469{  width: 469px; }
+.figw470{  width: 470px; }
+.figw471{  width: 471px; }
+.figw472{  width: 472px; }
+.figw473{  width: 473px; }
+.figw474{  width: 474px; }
+.figw475{  width: 475px; }
+.figw476{  width: 476px; }
+.figw477{  width: 477px; }
+.figw478{  width: 478px; }
+.figw479{  width: 479px; }
+.figw480{  width: 480px; }
+.figw481{  width: 481px; }
+.figw482{  width: 482px; }
+.figw483{  width: 483px; }
+.figw484{  width: 484px; }
+.figw485{  width: 485px; }
+.figw486{  width: 486px; }
+.figw487{  width: 487px; }
+.figw488{  width: 488px; }
+.figw489{  width: 489px; }
+.figw490{  width: 490px; }
+.figw491{  width: 491px; }
+.figw492{  width: 492px; }
+.figw493{  width: 493px; }
+.figw494{  width: 494px; }
+.figw495{  width: 495px; }
+.figw496{  width: 496px; }
+.figw497{  width: 497px; }
+.figw498{  width: 498px; }
+.figw499{  width: 499px; }
+.figw500{  width: 500px; }
+.figw501{  width: 501px; }
+.figw502{  width: 502px; }
+.figw503{  width: 503px; }
+.figw504{  width: 504px; }
+.figw505{  width: 505px; }
+.figw506{  width: 506px; }
+.figw507{  width: 507px; }
+.figw508{  width: 508px; }
+.figw509{  width: 509px; }
+.figw510{  width: 510px; }
+.figw511{  width: 511px; }
+.figw512{  width: 512px; }
+.figw513{  width: 513px; }
+.figw514{  width: 514px; }
+.figw515{  width: 515px; }
+.figw516{  width: 516px; }
+.figw517{  width: 517px; }
+.figw518{  width: 518px; }
+.figw519{  width: 519px; }
+.figw520{  width: 520px; }
+.figw521{  width: 521px; }
+.figw522{  width: 522px; }
+.figw523{  width: 523px; }
+.figw524{  width: 524px; }
+.figw525{  width: 525px; }
+.figw526{  width: 526px; }
+.figw527{  width: 527px; }
+.figw528{  width: 528px; }
+.figw529{  width: 529px; }
+.figw530{  width: 530px; }
+.figw531{  width: 531px; }
+.figw532{  width: 532px; }
+.figw533{  width: 533px; }
+.figw534{  width: 534px; }
+.figw535{  width: 535px; }
+.figw536{  width: 536px; }
+.figw537{  width: 537px; }
+.figw538{  width: 538px; }
+.figw539{  width: 539px; }
+.figw540{  width: 540px; }
+.figw541{  width: 541px; }
+.figw542{  width: 542px; }
+.figw543{  width: 543px; }
+.figw544{  width: 544px; }
+.figw545{  width: 545px; }
+.figw546{  width: 546px; }
+.figw547{  width: 547px; }
+.figw548{  width: 548px; }
+.figw549{  width: 549px; }
+.figw550{  width: 550px; }
+.figw551{  width: 551px; }
+.figw552{  width: 552px; }
+.figw553{  width: 553px; }
+.figw554{  width: 554px; }
+.figw555{  width: 555px; }
+.figw556{  width: 556px; }
+.figw557{  width: 557px; }
+.figw558{  width: 558px; }
+.figw559{  width: 559px; }
+.figw560{  width: 560px; }
+.figw561{  width: 561px; }
+.figw562{  width: 562px; }
+.figw563{  width: 563px; }
+.figw564{  width: 564px; }
+.figw565{  width: 565px; }
+.figw566{  width: 566px; }
+.figw567{  width: 567px; }
+.figw568{  width: 568px; }
+.figw569{  width: 569px; }
+.figw570{  width: 570px; }
+.figw571{  width: 571px; }
+.figw572{  width: 572px; }
+.figw573{  width: 573px; }
+.figw574{  width: 574px; }
+.figw575{  width: 575px; }
+.figw576{  width: 576px; }
+.figw577{  width: 577px; }
+.figw578{  width: 578px; }
+.figw579{  width: 579px; }
+.figw580{  width: 580px; }
+.figw581{  width: 581px; }
+.figw582{  width: 582px; }
+.figw583{  width: 583px; }
+.figw584{  width: 584px; }
+.figw585{  width: 585px; }
+.figw586{  width: 586px; }
+.figw587{  width: 587px; }
+.figw588{  width: 588px; }
+.figw589{  width: 589px; }
+.figw590{  width: 590px; }
+.figw591{  width: 591px; }
+.figw592{  width: 592px; }
+.figw593{  width: 593px; }
+.figw594{  width: 594px; }
+.figw595{  width: 595px; }
+.figw596{  width: 596px; }
+.figw597{  width: 597px; }
+.figw598{  width: 598px; }
+.figw599{  width: 599px; }
+.figw600{  width: 600px; }
+.figw601{  width: 601px; }
+.figw602{  width: 602px; }
+.figw603{  width: 603px; }
+.figw604{  width: 604px; }
+.figw605{  width: 605px; }
+.figw606{  width: 606px; }
+.figw607{  width: 607px; }
+.figw608{  width: 608px; }
+.figw609{  width: 609px; }
+.figw610{  width: 610px; }
+.figw611{  width: 611px; }
+.figw612{  width: 612px; }
+.figw613{  width: 613px; }
+.figw614{  width: 614px; }
+.figw615{  width: 615px; }
+.figw616{  width: 616px; }
+.figw617{  width: 617px; }
+.figw618{  width: 618px; }
+.figw619{  width: 619px; }
+.figw620{  width: 620px; }
+.figw621{  width: 621px; }
+.figw622{  width: 622px; }
+.figw623{  width: 623px; }
+.figw624{  width: 624px; }
+.figw625{  width: 625px; }
+.figw626{  width: 626px; }
+.figw627{  width: 627px; }
+.figw628{  width: 628px; }
+.figw629{  width: 629px; }
+.figw630{  width: 630px; }
+.figw631{  width: 631px; }
+.figw632{  width: 632px; }
+.figw633{  width: 633px; }
+.figw634{  width: 634px; }
+.figw635{  width: 635px; }
+.figw636{  width: 636px; }
+.figw637{  width: 637px; }
+.figw638{  width: 638px; }
+.figw639{  width: 639px; }
+.figw640{  width: 640px; }
+.figw641{  width: 641px; }
+.figw642{  width: 642px; }
+.figw643{  width: 643px; }
+.figw644{  width: 644px; }
+.figw645{  width: 645px; }
+.figw646{  width: 646px; }
+.figw647{  width: 647px; }
+.figw648{  width: 648px; }
+.figw649{  width: 649px; }
+.figw650{  width: 650px; }
+.figw651{  width: 651px; }
+.figw652{  width: 652px; }
+.figw653{  width: 653px; }
+.figw654{  width: 654px; }
+.figw655{  width: 655px; }
+.figw656{  width: 656px; }
+.figw657{  width: 657px; }
+.figw658{  width: 658px; }
+.figw659{  width: 659px; }
+.figw660{  width: 660px; }
+.figw661{  width: 661px; }
+.figw662{  width: 662px; }
+.figw663{  width: 663px; }
+.figw664{  width: 664px; }
+.figw665{  width: 665px; }
+.figw666{  width: 666px; }
+.figw667{  width: 667px; }
+.figw668{  width: 668px; }
+.figw669{  width: 669px; }
+.figw670{  width: 670px; }
+.figw671{  width: 671px; }
+.figw672{  width: 672px; }
+.figw673{  width: 673px; }
+.figw674{  width: 674px; }
+.figw675{  width: 675px; }
+.figw676{  width: 676px; }
+.figw677{  width: 677px; }
+.figw678{  width: 678px; }
+.figw679{  width: 679px; }
+.figw680{  width: 680px; }
+.figw681{  width: 681px; }
+.figw682{  width: 682px; }
+.figw683{  width: 683px; }
+.figw684{  width: 684px; }
+.figw685{  width: 685px; }
+.figw686{  width: 686px; }
+.figw687{  width: 687px; }
+.figw688{  width: 688px; }
+.figw689{  width: 689px; }
+.figw690{  width: 690px; }
+.figw691{  width: 691px; }
+.figw692{  width: 692px; }
+.figw693{  width: 693px; }
+.figw694{  width: 694px; }
+.figw695{  width: 695px; }
+.figw696{  width: 696px; }
+.figw697{  width: 697px; }
+.figw698{  width: 698px; }
+.figw699{  width: 699px; }
+.figw700{  width: 700px; }
+.figw701{  width: 701px; }
+.figw702{  width: 702px; }
+.figw703{  width: 703px; }
+.figw704{  width: 704px; }
+.figw705{  width: 705px; }
+.figw706{  width: 706px; }
+.figw707{  width: 707px; }
+.figw708{  width: 708px; }
+.figw709{  width: 709px; }
+.figw710{  width: 710px; }
+.figw711{  width: 711px; }
+.figw712{  width: 712px; }
+.figw713{  width: 713px; }
+.figw714{  width: 714px; }
+.figw715{  width: 715px; }
+.figw716{  width: 716px; }
+.figw717{  width: 717px; }
+.figw718{  width: 718px; }
+.figw719{  width: 719px; }
+.figw720{  width: 720px; }
+.figw721{  width: 721px; }
+.figw722{  width: 722px; }
+.figw723{  width: 723px; }
+.figw724{  width: 724px; }
+.figw725{  width: 725px; }
+.figw726{  width: 726px; }
+.figw727{  width: 727px; }
+.figw728{  width: 728px; }
+.figw729{  width: 729px; }
+.figw730{  width: 730px; }
+.figw731{  width: 731px; }
+.figw732{  width: 732px; }
+.figw733{  width: 733px; }
+.figw734{  width: 734px; }
+.figw735{  width: 735px; }
+.figw736{  width: 736px; }
+.figw737{  width: 737px; }
+.figw738{  width: 738px; }
+.figw739{  width: 739px; }
+.figw740{  width: 740px; }
+.figw741{  width: 741px; }
+.figw742{  width: 742px; }
+.figw743{  width: 743px; }
+.figw744{  width: 744px; }
+.figw745{  width: 745px; }
+.figw746{  width: 746px; }
+.figw747{  width: 747px; }
+.figw748{  width: 748px; }
+.figw749{  width: 749px; }
+.figw750{  width: 750px; }
+.figw751{  width: 751px; }
+.figw752{  width: 752px; }
+.figw753{  width: 753px; }
+.figw754{  width: 754px; }
+.figw755{  width: 755px; }
+.figw756{  width: 756px; }
+.figw757{  width: 757px; }
+.figw758{  width: 758px; }
+.figw759{  width: 759px; }
+.figw760{  width: 760px; }
+.figw761{  width: 761px; }
+.figw762{  width: 762px; }
+.figw763{  width: 763px; }
+.figw764{  width: 764px; }
+.figw765{  width: 765px; }
+.figw766{  width: 766px; }
+.figw767{  width: 767px; }
+.figw768{  width: 768px; }
+.figw769{  width: 769px; }
+.figw770{  width: 770px; }
+.figw771{  width: 771px; }
+.figw772{  width: 772px; }
+.figw773{  width: 773px; }
+.figw774{  width: 774px; }
+.figw775{  width: 775px; }
+.figw776{  width: 776px; }
+.figw777{  width: 777px; }
+.figw778{  width: 778px; }
+.figw779{  width: 779px; }
+.figw780{  width: 780px; }
+.figw781{  width: 781px; }
+.figw782{  width: 782px; }
+.figw783{  width: 783px; }
+.figw784{  width: 784px; }
+.figw785{  width: 785px; }
+.figw786{  width: 786px; }
+.figw787{  width: 787px; }
+.figw788{  width: 788px; }
+.figw789{  width: 789px; }
+.figw790{  width: 790px; }
+.figw791{  width: 791px; }
+.figw792{  width: 792px; }
+.figw793{  width: 793px; }
+.figw794{  width: 794px; }
+.figw795{  width: 795px; }
+.figw796{  width: 796px; }
+.figw797{  width: 797px; }
+.figw798{  width: 798px; }
+.figw799{  width: 799px; }
+
+.figw800{  width: 800px; }
+.figw801{  width: 801px; }
+.figw802{  width: 802px; }
+.figw803{  width: 803px; }
+.figw804{  width: 804px; }
+.figw805{  width: 805px; }
+.figw806{  width: 806px; }
+.figw807{  width: 807px; }
+.figw808{  width: 808px; }
+.figw809{  width: 809px; }
+.figw810{  width: 810px; }
+.figw811{  width: 811px; }
+.figw812{  width: 812px; }
+.figw813{  width: 813px; }
+.figw814{  width: 814px; }
+.figw815{  width: 815px; }
+.figw816{  width: 816px; }
+.figw817{  width: 817px; }
+.figw818{  width: 818px; }
+.figw819{  width: 819px; }
+.figw820{  width: 820px; }
+.figw821{  width: 821px; }
+.figw822{  width: 822px; }
+.figw823{  width: 823px; }
+.figw824{  width: 824px; }
+.figw825{  width: 825px; }
+.figw826{  width: 826px; }
+.figw827{  width: 827px; }
+.figw828{  width: 828px; }
+.figw829{  width: 829px; }
+.figw830{  width: 830px; }
+.figw831{  width: 831px; }
+.figw832{  width: 832px; }
+.figw833{  width: 833px; }
+.figw834{  width: 834px; }
+.figw835{  width: 835px; }
+.figw836{  width: 836px; }
+.figw837{  width: 837px; }
+.figw838{  width: 838px; }
+.figw839{  width: 839px; }
+.figw840{  width: 840px; }
+.figw841{  width: 841px; }
+.figw842{  width: 842px; }
+.figw843{  width: 843px; }
+.figw844{  width: 844px; }
+.figw845{  width: 845px; }
+.figw846{  width: 846px; }
+.figw847{  width: 847px; }
+.figw848{  width: 848px; }
+.figw849{  width: 849px; }
+.figw850{  width: 850px; }
+.figw851{  width: 851px; }
+.figw852{  width: 852px; }
+.figw853{  width: 853px; }
+.figw854{  width: 854px; }
+.figw855{  width: 855px; }
+.figw856{  width: 856px; }
+.figw857{  width: 857px; }
+.figw858{  width: 858px; }
+.figw859{  width: 859px; }
+.figw860{  width: 860px; }
+.figw861{  width: 861px; }
+.figw862{  width: 862px; }
+.figw863{  width: 863px; }
+.figw864{  width: 864px; }
+.figw865{  width: 865px; }
+.figw866{  width: 866px; }
+.figw867{  width: 867px; }
+.figw868{  width: 868px; }
+.figw869{  width: 869px; }
+.figw870{  width: 870px; }
+.figw871{  width: 871px; }
+.figw872{  width: 872px; }
+.figw873{  width: 873px; }
+.figw874{  width: 874px; }
+.figw875{  width: 875px; }
+.figw876{  width: 876px; }
+.figw877{  width: 877px; }
+.figw878{  width: 878px; }
+.figw879{  width: 879px; }
+.figw880{  width: 880px; }
+.figw881{  width: 881px; }
+.figw882{  width: 882px; }
+.figw883{  width: 883px; }
+.figw884{  width: 884px; }
+.figw885{  width: 885px; }
+.figw886{  width: 886px; }
+.figw887{  width: 887px; }
+.figw888{  width: 888px; }
+.figw889{  width: 889px; }
+.figw890{  width: 890px; }
+.figw891{  width: 891px; }
+.figw892{  width: 892px; }
+.figw893{  width: 893px; }
+.figw894{  width: 894px; }
+.figw895{  width: 895px; }
+.figw896{  width: 896px; }
+.figw897{  width: 897px; }
+.figw898{  width: 898px; }
+.figw899{  width: 899px; }
+.figw900{  width: 900px; }
+.figw901{  width: 901px; }
+.figw902{  width: 902px; }
+.figw903{  width: 903px; }
+.figw904{  width: 904px; }
+.figw905{  width: 905px; }
+.figw906{  width: 906px; }
+.figw907{  width: 907px; }
+.figw908{  width: 908px; }
+.figw909{  width: 909px; }
+.figw910{  width: 910px; }
+.figw911{  width: 911px; }
+.figw912{  width: 912px; }
+.figw913{  width: 913px; }
+.figw914{  width: 914px; }
+.figw915{  width: 915px; }
+.figw916{  width: 916px; }
+.figw917{  width: 917px; }
+.figw918{  width: 918px; }
+.figw919{  width: 919px; }
+.figw920{  width: 920px; }
+.figw921{  width: 921px; }
+.figw922{  width: 922px; }
+.figw923{  width: 923px; }
+.figw924{  width: 924px; }
+.figw925{  width: 925px; }
+.figw926{  width: 926px; }
+.figw927{  width: 927px; }
+.figw928{  width: 928px; }
+.figw929{  width: 929px; }
+.figw930{  width: 930px; }
+.figw931{  width: 931px; }
+.figw932{  width: 932px; }
+.figw933{  width: 933px; }
+.figw934{  width: 934px; }
+.figw935{  width: 935px; }
+.figw936{  width: 936px; }
+.figw937{  width: 937px; }
+.figw938{  width: 938px; }
+.figw939{  width: 939px; }
+.figw940{  width: 940px; }
+.figw941{  width: 941px; }
+.figw942{  width: 942px; }
+.figw943{  width: 943px; }
+.figw944{  width: 944px; }
+.figw945{  width: 945px; }
+.figw946{  width: 946px; }
+.figw947{  width: 947px; }
+.figw948{  width: 948px; }
+.figw949{  width: 949px; }
+.figw950{  width: 950px; }
+.figw951{  width: 951px; }
+.figw952{  width: 952px; }
+.figw953{  width: 953px; }
+.figw954{  width: 954px; }
+.figw955{  width: 955px; }
+.figw956{  width: 956px; }
+.figw957{  width: 957px; }
+.figw958{  width: 958px; }
+.figw959{  width: 959px; }
+.figw960{  width: 960px; }
+.figw961{  width: 961px; }
+.figw962{  width: 962px; }
+.figw963{  width: 963px; }
+.figw964{  width: 964px; }
+.figw965{  width: 965px; }
+.figw966{  width: 966px; }
+.figw967{  width: 967px; }
+.figw968{  width: 968px; }
+.figw969{  width: 969px; }
+.figw970{  width: 970px; }
+.figw971{  width: 971px; }
+.figw972{  width: 972px; }
+.figw973{  width: 973px; }
+.figw974{  width: 974px; }
+.figw975{  width: 975px; }
+.figw976{  width: 976px; }
+.figw977{  width: 977px; }
+.figw978{  width: 978px; }
+.figw979{  width: 979px; }
+.figw980{  width: 980px; }
+.figw981{  width: 981px; }
+.figw982{  width: 982px; }
+.figw983{  width: 983px; }
+.figw984{  width: 984px; }
+.figw985{  width: 985px; }
+.figw986{  width: 986px; }
+.figw987{  width: 987px; }
+.figw988{  width: 988px; }
+.figw989{  width: 989px; }
+.figw990{  width: 990px; }
+.figw991{  width: 991px; }
+.figw992{  width: 992px; }
+.figw993{  width: 993px; }
+.figw994{  width: 994px; }
+.figw995{  width: 995px; }
+.figw996{  width: 996px; }
+.figw997{  width: 997px; }
+.figw998{  width: 998px; }
+.figw999{  width: 999px; }
+.figw1000{  width: 1000px; }
+
+
+/* social links for last page */
+.social {
+  color: #185191 !important;
+  text-decoration: none;
+}
+
+.social a {
+  color: black !important;
+  text-decoration: none;
+}
+.social a:hover {
+  color: #07A1E2  !important;
+}
+
+/* --- keine icons hinter externen links */
+.social a.external:after{
+  display: none;
+}
+/* =============================== */
+
+
+// quarto-scss-analysis-annotation { "origin": null }
