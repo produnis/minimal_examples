@@ -7,6 +7,10 @@ Each example lives in its own branch
 
 ## Logo problem
 
+discussed here: <https://github.com/quarto-dev/quarto-cli/discussions/13491>
+
+
+
 My extension provides a logo at `_extensions/hsnr-aushang/HSNRfb10s.png`.
 This worked just fine....
 
