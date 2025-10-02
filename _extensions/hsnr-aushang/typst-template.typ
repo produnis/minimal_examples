@@ -3,7 +3,7 @@
 #let aushang(
   // welche Wert werden aus dem YAML-Header gelesen?
   title: none,
-  logo: none,
+  mylogo: none,
   lang: none,
   font: none,
   font-size: none,
@@ -14,7 +14,7 @@
   // Hier startet die eigentliche Funktion
 
   // Der Logo-Pfad muss escaped werden
-  let logo_path = logo.replace("\\", "")
+  let logo_path = mylogo.replace("\\", "")
   let title = title.replace("~", " ")
 
   // Schriftart und Sprache einstellen
@@ -24,7 +24,7 @@
   // Blockschrift aktivieren
   set par(justify: true)
   set table(stroke: none,)
-  
+
   // Farben definieren
   let HSNRblue1 = rgb("185191")
   let HSNRblue2 = rgb("07A1E2")
@@ -48,7 +48,7 @@
     text(HSNRblue2)[#it.body
                     #v(2mm)]
   )
-  
+
   // Link-color
   show link: set text(fill: rgb("185191"))
 

@@ -2,7 +2,7 @@
     // Diese Werte kommen aus dem YAML
     title: "$title$",
     lang: "$lang$",
-    logo: "$logo$",
+    mylogo: "$mylogo$",
     font: "$font$",
     font-size: $font-size$,
     title-size: $title-size$,
