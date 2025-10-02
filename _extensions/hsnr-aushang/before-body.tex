@@ -1,0 +1,13 @@
+%--- HSNR-Aushang ---------------------------------------
+\pagestyle{fancy} %eigener Seitenstil an hier
+\fancyhf{} %alle Kopf- und Fußzeilenfelder bereinigen
+\renewcommand{\headrulewidth}{0pt} %obere Trennlinie löschen
+\renewcommand{\footrulewidth}{0pt} %untere Trennlinie sichtbar setzen
+\cfoot{\footnotesize\normalfont Seite \thepage\ von \pageref{LastPage} }
+\clearpage
+\setcounter{page}{1}
+\lhead{{\hspace{-20mm} \colorbox{HSNRblue1}{\parbox{100mm}{{\hspace{17mm}\Large\color{white}$title$}}} }\vspace{1mm}\ }
+\rhead{{\vfill\includegraphics[width=60mm]{$logo$}}}
+
+\vspace*{0.5mm}
+%---------------------------------------------------------

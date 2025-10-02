@@ -1,16 +1,20 @@
-# minimal_examples
-In this repo, I collect my minimal examples for QA in forums
+---
+title: "This is just a test"
+author: "produnis"
+date: '2025-10-02'
+format: hsnr-aushang-typst
+# logo: "HSNRfb10s.pngr"
+---
 
-Each example lives in its own branch
 
+## This does not work
 
+I dont know why this wont work
 
 ## Logo problem
-
 My extension provides a logo at `_extensions/hsnr-aushang/HSNRfb10s.png`.
 This worked just fine....
-
-Now, after the summer break, I come back to see that is throws an error:
+Now, after the summer break, I come back to see that is throws an error
 
 > [typst]: Compiling Beispiel.typ to Beispiel.pdf...error: file not found (searched at /home/produnis/minimal_examples/true)
 
